@@ -35,14 +35,14 @@ import { CARS } from './data/cars'
     return(
       <View style={styles.body}>
         <TextInput placeholder='Search Assets' style={styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)} />
-        <Button onPress={ onPressHandler} title={'Go to Bookings'} />
+        {/* <Button onPress={ onPressHandler} title={'Go to Bookings'} /> */}
         
         <FlatList style={styles.flatlist}
           keyExtractor={(item) => item.id}
           data={filteredCars}
           renderItem={({ item }) => (
             <AssetComponent 
-              item={item}
+              item={item} navigation={navigation}
             />          
           )}
         /> 

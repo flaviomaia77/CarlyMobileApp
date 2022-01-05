@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Text, View, Pressable, TextInput, FlatList, Button } from 'react-native';
+import { Text, View, Pressable, TextInput, FlatList } from 'react-native';
 import BookingComponent from './BookingComponent';
 import styles  from "./Styles";
 
@@ -17,18 +17,18 @@ export default function Bookings({ navigation, route } ){
     const [search, setSearch] = useState('')
 
     const [bookings, setBookings] = useState([
-      { name: 'Item 234' },
-      { name: 'Item 65' },
-      { name: 'Item 86' },
-      { name: 'Item 23' },
-      { name: 'Item 19' },
-      { name: 'Item 57' },
-      { name: 'Item 982' },
-      { name: 'Item 823' },
-      { name: 'Item 70' },
-      { name: 'Item 10' },
-      { name: 'Item 1140' },
-      { name: 'Item 293' },
+      { name: 'Order 234', carID:1 },
+      { name: 'Order 65', carID:2 },
+      { name: 'Order 86', carID:3 },
+      { name: 'Order 23', carID:4 },
+      { name: 'Order 19', carID:5 },
+      { name: 'Order 57', carID:1 },
+      { name: 'Order 982', carID:2 },
+      { name: 'Order 823', carID:3 },
+      { name: 'Order 70', carID:4 },
+      { name: 'Order 10', carID:5 },
+      { name: 'Order 1140', carID:1 },
+      { name: 'Order 293', carID:2 },
     ]);
     const [filteredBookings, setFilteredBookings] = useState(bookings);
 
@@ -52,19 +52,16 @@ export default function Bookings({ navigation, route } ){
     return(
       <View style={ styles.body}>
         <TextInput placeholder='Search Bookings' style={ styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)}  />
-        <Button title={'Go Back to Assets'} onPress={ onPressHandler}  />
+        {/* <Button title={'Go Back to Assets'} onPress={ onPressHandler}  />
         <Text style={styles.text}>{ItemName}</Text>
-        <Text style={styles.text}>ID: {ItemId}</Text>
+        <Text style={styles.text}>ID: {ItemId}</Text> */}
         <FlatList style={styles.flatlist}
           keyExtractor={(item,index) => index.toString()}
           data={filteredBookings}
           renderItem={({ item }) => (
-            <View style={styles.item} >
-              <Text style={styles.text}> {item.name} </Text>
-              <View style={styles.cancelbutton}>
-                <Button title='Cancel'  ></Button>
-              </View>
-            </View>
+            <BookingComponent 
+              item={item} navigation={navigation}
+            />
           )}
         />
 
