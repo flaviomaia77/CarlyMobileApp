@@ -22,12 +22,14 @@ const BookingComponent = (props) => {
     }
 
     return(
-        <View style={styles.car} >
-            <Text style={styles.text}> {props.item.name} </Text>
-            <View style={styles.cancelbutton}>
-                <Button title='Show Details' onPress={onPressHandler} ></Button>
-                <Button title='Cancel' onPress={CancelOrder} ></Button>
-            </View>
+        <View >
+            <Pressable onPress={onPressHandler} style={styles.car} >
+                <Text style={styles.text}> {props.item.name} </Text>
+                <View style={styles.cancelbutton}>
+                    {/* <Button title='Show Details' onPress={onPressHandler} ></Button> */}
+                    <Button title='Cancel' onPress={CancelOrder} ></Button>
+                </View>
+            </Pressable>
         </View>
         
     ) 

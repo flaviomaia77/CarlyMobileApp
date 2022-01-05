@@ -16,15 +16,17 @@ const AssetComponent = (props) => {
     }
 
     return(
-        <View style={styles.car}>
-            <Image style={styles.image} source={{ uri: props.item.image }} />
-            <Text style={ styles.text} > 
-                { props.item.name}
-            </Text>
-            <Text style={ styles.text} > 
-                { props.item.pricePerDay}
-            </Text>
-            <Button title={'Show details'} onPress={onPressHandler}/>
+        <View >
+            <Pressable onPress={onPressHandler} style={styles.car} >
+                <Image style={styles.image} source={{ uri: props.item.image }} />
+                <Text style={ styles.text} > 
+                    { props.item.name}
+                </Text>
+                <Text style={ styles.text} > 
+                    { props.item.pricePerDay}
+                </Text>
+            </Pressable>
+            {/* <Button title={'Show details'} onPress={onPressHandler}/> */}
         </View>
         
     ) 
