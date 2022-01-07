@@ -1,21 +1,38 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Pressable, TextInput, FlatList, Button } from 'react-native';
 import AssetComponent from './AssetComponent';
 import styles from "./Styles";
 import { CARS } from './data/cars'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
   export default function Assets({ navigation, route}){
+
+    useEffect(() => { 
+      getData();
+    }, [])
+
+    const [name, setName] = useState('');
+
+    const getData = () => {
+      try {
+          AsyncStorage.getItem('UserName').then(value=> {
+              if(value != null) { 
+                  setName(value);
+              }
+          })
+      } catch(error) {
+          console.log(value) 
+      }
+    }
+
 
     const [search, setSearch] = useState('')
 
     const [cars, setCars] = useState(require('./data/cars'));
     const [filteredCars, setFilteredCars] = useState(cars);
 
-    const onPressHandler = () => {
-      navigation.navigate('Bookings', { ItemName: 'Props from Assets', ItemId: 22})
-    }
 
     const searchFilterFunction = (text) => {
       if (text) {
@@ -34,9 +51,8 @@ import { CARS } from './data/cars'
 
     return(
       <View style={styles.body}>
-        <TextInput placeholder='Search Assets' style={styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)} />
-        {/* <Button onPress={ onPressHandler} title={'Go to Bookings'} /> */}
-        
+        <Text> Logged as { name} ! </Text>
+        <TextInput placeholder='Search Assets' style={styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)} />        
         <FlatList style={styles.flatlist}
           keyExtractor={(item) => item.id}
           data={filteredCars}

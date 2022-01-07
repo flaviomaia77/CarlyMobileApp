@@ -1,5 +1,4 @@
 import { NavigationContainer, StackRouter } from '@react-navigation/native';
-import { createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -9,44 +8,61 @@ import Assets from './Assets';
 import AssetDetails from './AssetDetails';
 import Bookings from './Bookings';
 import BookingDetails from './BookingDetails';
+import Login from './Login';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+
+
+const LoginStack = createStackNavigator();
+const ListDrawer = createDrawerNavigator();
+const DetailsStack = createStackNavigator();
+
+
+
+function Main() {
+  return (
+    <ListDrawer.Navigator>
+      <ListDrawer.Screen 
+        name='Assets' 
+        component={ AssetsScreen } />
+      <ListDrawer.Screen 
+        name='Bookings' 
+        component={ BookingsScreen } 
+      />
+    </ListDrawer.Navigator>
+  )
+}
 
 function AssetsScreen() {
   return (
-    <Stack.Navigator initialRouteName="AssetsList" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AssetsList" component={Assets} />
-      <Stack.Screen name="AssetDetails" component={AssetDetails} />
-    </Stack.Navigator>
+    <DetailsStack.Navigator initialRouteName="AssetsList" screenOptions={{ headerShown: false }}>
+      <DetailsStack.Screen name="AssetsList" component={Assets} />
+      <DetailsStack.Screen name="AssetDetails" component={AssetDetails} />
+    </DetailsStack.Navigator>
   );
 }
 
 function BookingsScreen() {
   return (
-    <Stack.Navigator initialRouteName="BookingsList" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="BookingsList" component={Bookings} 
+    <DetailsStack.Navigator initialRouteName="BookingsList" screenOptions={{ headerShown: false }}>
+      <DetailsStack.Screen name="BookingsList" component={Bookings} 
         initialParams={{ ItemName: 'Default', ItemId: 12 }} />
-      <Stack.Screen name="BookingDetails" component={BookingDetails} />
-    </Stack.Navigator>
+      <DetailsStack.Screen name="BookingDetails" component={BookingDetails} />
+    </DetailsStack.Navigator>
   );
 }
-
 
 const App = () =>  {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen 
-          name='Assets' 
-          component={ AssetsScreen } />
-        <Drawer.Screen 
-          name='Bookings' 
-          component={ BookingsScreen } 
-        />
-      </Drawer.Navigator>
+      <LoginStack.Navigator initialRouteName='Login'  screenOptions={{ headerShown: false }} >
+        <LoginStack.Screen 
+          name='Login'
+          component={ Login } />
+        <LoginStack.Screen 
+          name='Main'
+          component={ Main } />
+      </LoginStack.Navigator>
     </NavigationContainer>
   );
 }
