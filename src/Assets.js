@@ -17,9 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
     const getData = () => {
       try {
-          AsyncStorage.getItem('UserName').then(value=> {
+          AsyncStorage.getItem('UserData').then(value=> {
               if(value != null) { 
-                  setName(value);
+                let user = JSON.parse(value);
+                  setName(user.Name)
               }
           })
       } catch(error) {

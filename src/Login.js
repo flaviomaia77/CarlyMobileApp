@@ -2,16 +2,24 @@ import React, { useState, useEffect }  from 'react';
 import { View, StyleSheet, Text, Image, Button, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from "./Styles";
 
 export default function Login({navigation}) { 
-    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     const setData = async () => {
-        if (name.length == 0) { 
-            Alert.alert('Warning!', 'Please write your data.')
-        } else{
+        if (username.length == 0) { 
+            Alert.alert('Warning!', 'Please write your username.')
+        } else if (password.length == 0) {
+            Alert.alert('Warning!', 'Please write your password.')
+        } else {
             try{
-                await AsyncStorage.setItem('UserName', name);
+                var user = { 
+                    Name: username,
+                    Password: password
+                }
+                await AsyncStorage.setItem('UserData', JSON.stringify(user));
                 navigation.navigate('Main')
             } catch (error) { 
                 console.log(error)
@@ -21,36 +29,11 @@ export default function Login({navigation}) {
     }
 
     return (
-        <View style={ styles.body } > 
-            <Image style={styles.logo} source={require('../assets/favicon.png')}/>
-            <Text> Carly </Text>
-        <TextInput style={styles.textinput} placeholder='Enter your login' onChangeText={(value) => setName(value) }/>
-        <TextInput style={styles.textinput} placeholder='Password' onChangeText={(value) => setName(value) }/>
+        <View style={ styles.loginBody } > 
+            <Image style={styles.loginLogo} source={require('../assets/favicon.png')}/>
+        <TextInput style={styles.loginTextInput} placeholder='Enter your login' onChangeText={(value) => setUsername(value) }/>
+        <TextInput style={styles.loginTextInput} placeholder='Password' onChangeText={(value) => setPassword(value) }/>
         <Button title='Login' onPress={setData}/>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    body:{
-        flex:1,
-        alignItems: 'center',
-        backgroundColor: '#0080ff',
-    },
-    logo:{ 
-        width: 100,
-        height: 100,
-        marginTop: 200,
-        marginBottom: 50
-    },
-    textinput:{
-        width: 300,
-        borderWidth: 1,
-        borderColor: '#555',
-        borderRadius: 10,
-        backgroundColor: '#ffffff',
-        textAlign: 'center',
-        fontSize:20,
-        marginBottom: 10,
-    }
-})
