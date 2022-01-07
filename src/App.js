@@ -10,6 +10,9 @@ import AssetDetails from './AssetDetails';
 import Bookings from './Bookings';
 import BookingDetails from './BookingDetails';
 
+import { Provider } from 'react-redux'
+import { Store } from './redux/store'
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -37,17 +40,19 @@ function BookingsScreen() {
 const App = () =>  {
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen 
-          name='Assets' 
-          component={ AssetsScreen } />
-        <Drawer.Screen 
-          name='Bookings' 
-          component={ BookingsScreen } 
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Drawer.Navigator>
+          <Drawer.Screen 
+            name='Assets' 
+            component={ AssetsScreen } />
+          <Drawer.Screen 
+            name='Bookings' 
+            component={ BookingsScreen } 
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
