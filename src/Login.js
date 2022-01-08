@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, Button, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getToken, setToken } from './utils/jwt';
+import { getToken, setToken, logOut } from './utils/jwt';
 import { signIn } from './api/auth'
 
 export default function Login({ navigation }) {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
 
-    // useEffect(() => {
-    //     if (getToken()) {
-    //         navigation.navigate('Main')
-    //     }
-    // }, [])    
+    useEffect(() => {
+        if (getToken()) {
+            navigation.navigate('Main')
+        }
+    }, [])
 
     const handleLogin = async () => {
         if (name.length === 0 || password.length === 0) {
@@ -28,6 +28,7 @@ export default function Login({ navigation }) {
                 }
 
                 setToken(await response.data.jwttoken)
+                setPassword('')
                 navigation.navigate('Main')
             } catch (err) {
                 Alert.alert('Access denied!', 'Please check your login name and password.')

@@ -1,6 +1,7 @@
 import { NavigationContainer, StackRouter } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Button, View } from 'react-native';
 
 import React from 'react';
@@ -11,15 +12,16 @@ import AssetDetails from './AssetDetails';
 import Bookings from './Bookings';
 import BookingDetails from './BookingDetails';
 import Login from './Login';
-import { logout } from './utils/jwt'
+import { logOut } from './utils/jwt'
 
 const LoginStack = createStackNavigator();
 const ListDrawer = createDrawerNavigator();
 const DetailsStack = createStackNavigator();
 
-function onLogout({ navigation }) {
-  logout()
-  navigation.navigate('Login')
+function onLogout(props) {
+  console.log('onLogout')
+  logOut()
+  props.navigation.navigate('Login')
 }
 
 function LogoutButton({ navigation }) {
@@ -31,9 +33,22 @@ function LogoutButton({ navigation }) {
   );
 }
 
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="LogOut"
+        onPress={() => { onLogout(props) }}
+      />
+    </DrawerContentScrollView>
+
+  )
+}
+
 function Main() {
   return (
-    <ListDrawer.Navigator>
+    <ListDrawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <ListDrawer.Screen
         name='Assets'
         component={AssetsScreen}
@@ -42,11 +57,26 @@ function Main() {
         name='Bookings'
         component={BookingsScreen}
       />
-      <ListDrawer.Screen
+      {/* <ListDrawer.Screen
         name='Logout'
         component={LogoutButton}
-      />
+      /> */}
     </ListDrawer.Navigator>
+
+    // <ListDrawer.Navigator>
+    //   <ListDrawer.Screen
+    //     name='Assets'
+    //     component={AssetsScreen}
+    //   />
+    //   <ListDrawer.Screen
+    //     name='Bookings'
+    //     component={BookingsScreen}
+    //   />
+    //   <ListDrawer.Screen
+    //     name='Logout'
+    //     component={LogoutButton}
+    //   />
+    // </ListDrawer.Navigator>
   )
 }
 
