@@ -5,33 +5,37 @@ import AssetComponent from './AssetComponent';
 import styles from "./Styles";
 import { CARS } from './data/cars'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getToken, setToken, logOut } from './utils/jwt';
+import { getAssets } from './api/assets'
 
 
 export default function Assets({ navigation, route }) {
 
-  useEffect(() => {
-    getData();
-  }, [])
-
   const [name, setName] = useState('');
-
-  const getData = () => {
-    try {
-      AsyncStorage.getItem('UserName').then(value => {
-        if (value != null) {
-          setName(value);
-        }
-      })
-    } catch (error) {
-      console.log(value)
-    }
-  }
-
-
+  const [assets, setAssets] = useState([]);
   const [search, setSearch] = useState('')
-
   const [cars, setCars] = useState(require('./data/cars'));
   const [filteredCars, setFilteredCars] = useState(cars);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const token = await getToken(token)
+        if (token) {
+          setName(token)
+          console.log('assets effect:', token)
+        }
+
+        const response = await getAssets(token)
+        console.log(response)
+        setAssets(response.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchCars()
+  }, [])
 
 
   const searchFilterFunction = (text) => {

@@ -24,15 +24,6 @@ function onLogout(props) {
   props.navigation.navigate('Login')
 }
 
-function LogoutButton({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => { onLogout }
-      } title="Logout" />
-    </View>
-  );
-}
-
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
@@ -57,26 +48,7 @@ function Main() {
         name='Bookings'
         component={BookingsScreen}
       />
-      {/* <ListDrawer.Screen
-        name='Logout'
-        component={LogoutButton}
-      /> */}
     </ListDrawer.Navigator>
-
-    // <ListDrawer.Navigator>
-    //   <ListDrawer.Screen
-    //     name='Assets'
-    //     component={AssetsScreen}
-    //   />
-    //   <ListDrawer.Screen
-    //     name='Bookings'
-    //     component={BookingsScreen}
-    //   />
-    //   <ListDrawer.Screen
-    //     name='Logout'
-    //     component={LogoutButton}
-    //   />
-    // </ListDrawer.Navigator>
   )
 }
 
