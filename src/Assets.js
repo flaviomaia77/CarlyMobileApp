@@ -56,8 +56,8 @@ export default function Assets({ navigation, route }) {
   return (
     <View style={styles.body}>
       <Text> Logged as {name} ! </Text>
-      <TextInput placeholder='Search Assets' style={styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)} />
-      <FlatList style={styles.flatlist}
+      <TextInput placeholder='Search Assets' style={styles.assetsTextinput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
+      <FlatList style={styles.assetsFlatlist}
         keyExtractor={(item) => item.id}
         data={filteredCars}
         renderItem={({ item }) => (

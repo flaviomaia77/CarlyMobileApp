@@ -23,8 +23,8 @@ const BookingComponent = (props) => {
 
     return(
         <View >
-            <Pressable onPress={onPressHandler} style={styles.car} >
-                <Text style={styles.text}> {props.item.name} </Text>
+            <Pressable onPress={onPressHandler} style={styles.bookingsComponent} >
+                <Text style={styles.bookingsText}> {props.item.name} </Text>
                 <View style={styles.cancelbutton}>
                     {/* <Button title='Show Details' onPress={onPressHandler} ></Button> */}
                     <Button title='Cancel' onPress={CancelOrder} ></Button>

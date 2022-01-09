@@ -12,6 +12,7 @@ import AssetDetails from './AssetDetails';
 import Bookings from './Bookings';
 import BookingDetails from './BookingDetails';
 import Login from './Login';
+import Splash from './Splash';
 import { logOut } from './utils/jwt'
 
 const LoginStack = createStackNavigator();
@@ -21,7 +22,7 @@ const DetailsStack = createStackNavigator();
 function onLogout(props) {
   console.log('onLogout')
   logOut()
-  props.navigation.navigate('Login')
+  props.navigation.navigate('Login', {logout:true})
 }
 
 function CustomDrawerContent(props) {
@@ -39,7 +40,13 @@ function CustomDrawerContent(props) {
 
 function Main() {
   return (
-    <ListDrawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+    <ListDrawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} 
+      screenOptions={{
+        headerMode: 'screen',
+        headerTintColor: 'white',
+        headerStyle: { backgroundColor: '#faf' },
+      }}
+    />}>
       <ListDrawer.Screen
         name='Assets'
         component={AssetsScreen}
@@ -71,14 +78,24 @@ function BookingsScreen() {
   );
 }
 
+
+
 const App = () => {
 
   return (
-    <NavigationContainer>
-      <LoginStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }} >
+    <NavigationContainer >
+      <LoginStack.Navigator initialRouteName='Splash' 
+      screenOptions={{ headerShown: false }}  >
+        <LoginStack.Screen
+          name='Splash'
+          component={Splash}
+        />
         <LoginStack.Screen
           name='Login'
           component={Login}
+          options={{
+            animationEnabled: false,
+          }}
         />
         <LoginStack.Screen
           name='Main'

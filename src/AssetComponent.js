@@ -1,12 +1,5 @@
 import React from 'react';
-import { 
-    View,
-    Pressable,
-    Text,
-    Button,
-    StyleSheet,
-    Image
-} from 'react-native';
+import { View, Pressable, Text, Image } from 'react-native';
 import styles  from "./Styles";
 
 const AssetComponent = (props) => {
@@ -17,16 +10,17 @@ const AssetComponent = (props) => {
 
     return(
         <View >
-            <Pressable onPress={onPressHandler} style={styles.car} >
-                <Image style={styles.image} source={{ uri: props.item.image }} />
-                <Text style={ styles.text} > 
-                    { props.item.name}
-                </Text>
-                <Text style={ styles.text} > 
-                    { props.item.pricePerDay}
-                </Text>
+            <Pressable onPress={onPressHandler} style={styles.assetsComponent} >
+                <Image style={styles.assetsImage} source={{ uri: props.item.image }} />
+                <View>
+                    <Text style={ styles.assetsText} > 
+                        { props.item.name}
+                    </Text>
+                    <Text style={ styles.assetsText} > 
+                        { props.item.pricePerDay}
+                    </Text>
+                </View>
             </Pressable>
-            {/* <Button title={'Show details'} onPress={onPressHandler}/> */}
         </View>
         
     ) 

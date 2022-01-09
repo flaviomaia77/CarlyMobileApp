@@ -51,11 +51,8 @@ export default function Bookings({ navigation, route } ){
 
     return(
       <View style={ styles.body}>
-        <TextInput placeholder='Search Bookings' style={ styles.input} value={search} onChangeText={(text) => searchFilterFunction(text)}  />
-        {/* <Button title={'Go Back to Assets'} onPress={ onPressHandler}  />
-        <Text style={styles.text}>{ItemName}</Text>
-        <Text style={styles.text}>ID: {ItemId}</Text> */}
-        <FlatList style={styles.flatlist}
+        <TextInput placeholder='Search Bookings' style={ styles.bookingsTextinput} value={search} onChangeText={(text) => searchFilterFunction(text)}  />
+        <FlatList style={styles.bookingsFlatlist}
           keyExtractor={(item,index) => index.toString()}
           data={filteredBookings}
           renderItem={({ item }) => (
