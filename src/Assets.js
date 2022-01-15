@@ -27,7 +27,7 @@ export default function Assets({ navigation, route }) {
         }
 
         const response = await getAssets(token)
-        console.log(response)
+        console.log(response.data)
         setAssets(response.data)
       } catch (err) {
         console.log(err)
@@ -57,9 +57,18 @@ export default function Assets({ navigation, route }) {
     <View style={styles.body}>
       <Text> Logged as {name} ! </Text>
       <TextInput placeholder='Search Assets' style={styles.assetsTextinput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
-      <FlatList style={styles.assetsFlatlist}
+      {/* <FlatList style={styles.assetsFlatlist}
         keyExtractor={(item) => item.id}
         data={filteredCars}
+        renderItem={({ item }) => (
+          <AssetComponent
+            item={item} navigation={navigation}
+          />
+        )}
+      /> */}
+      <FlatList style={styles.assetsFlatlist}
+        keyExtractor={(item) => item.carId}
+        data={assets}
         renderItem={({ item }) => (
           <AssetComponent
             item={item} navigation={navigation}

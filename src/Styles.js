@@ -4,7 +4,7 @@ export default StyleSheet.create({
   body: {
     flex: 1,
     margin: 0,
-    backgroundColor: '#fff',
+    backgroundColor: '#eef',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -67,17 +67,26 @@ export default StyleSheet.create({
 
   
   assetsText: {
+    display:'flex',
     fontSize: 15,
+    textAlign: 'center',
+    alignItems: 'flex-start',
+    margin: 2
+  },
+  assetsDescription: {
+    width:'65%',
+    fontSize: 15,
+    textAlign: 'center',
   },
   assetsImage: {
     width: 120,
     height: 120,
     alignItems: 'flex-start',
-    margin: 10
+    margin: 5
   },
   assetsComponent: {
     flexDirection: 'row',
-    backgroundColor: '#acc',
+    backgroundColor: '#fff',
     alignItems: 'flex-start',
     borderRadius: 5,
     margin: 10,
@@ -92,7 +101,7 @@ export default StyleSheet.create({
   },
   assetsTextinput: {
     borderRadius: 15,
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
     width: '95%',
     textAlign: 'center',
   },
