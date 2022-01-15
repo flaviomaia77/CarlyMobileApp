@@ -27,7 +27,7 @@ export default function Assets({ navigation, route }) {
         }
 
         const response = await getAssets(token)
-        console.log(response.data)
+        //console.log(response.data)
         setAssets(response.data)
       } catch (err) {
         console.log(err)

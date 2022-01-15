@@ -44,7 +44,7 @@ function Main() {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#faf' },
+        headerStyle: { backgroundColor: '#fff' },
       }}
     />}>
       <ListDrawer.Screen
