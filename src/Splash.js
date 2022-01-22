@@ -7,16 +7,16 @@ import { getToken } from "./utils/jwt";
 export default function Splash({ navigation }) {
 
     const handleNavigation = () => {
-        navigation.navigate('Login', {logout: false})
+        navigation.navigate('Login', { logout: false })
     }
 
     return (
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-            <LottieView source={ require('../assets/splash2.json')}
-            autoPlay
-            autoSize
-            loop={false}
-            onAnimationFinish={handleNavigation}
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <LottieView source={require('../assets/splash2.json')}
+                autoPlay
+                autoSize
+                loop={false}
+                onAnimationFinish={handleNavigation}
             />
         </View>
     )

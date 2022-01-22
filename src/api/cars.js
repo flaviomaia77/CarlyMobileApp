@@ -3,8 +3,8 @@ import { API_NAME, API_ENDPOINTS } from './index.js'
 import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
-export const getAssets = async (token, pageNum = 0, maxNum = 10) => {
-    console.log('getAssets:', token)
+export const getCars = async (token, pageNum = 0, maxNum = 10) => {
+    console.log('getCars:', token)
     try {
         return await axios.get(
             `${API_NAME}/${API_ENDPOINTS.car}?pageNum=${pageNum}&maxNum=${maxNum}`,
@@ -17,7 +17,7 @@ export const getAssets = async (token, pageNum = 0, maxNum = 10) => {
     }
 }
 
-export const getAssetById = async (id) => {
+export const getCarById = async (id) => {
     try {
         return axios.get(`${API_NAME}/${API_ENDPOINTS.car}/${id}`)
     } catch (err) {
@@ -30,15 +30,15 @@ export const getImage = async (id) => {
         const token = await getToken(token)
 
         return axios
-        .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {
-            headers: { 
-                Authorization: 'Bearer ' + token,
-            },
-            responseType: 'arraybuffer',
-        })
-        .then((response) =>
-            new Buffer.from(response.data, 'binary').toString('base64')
-        )
+            .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                },
+                responseType: 'arraybuffer',
+            })
+            .then((response) =>
+                new Buffer.from(response.data, 'binary').toString('base64')
+            )
     } catch (err) {
         console.log('EEEEEEEEEEEEe')
         throw err

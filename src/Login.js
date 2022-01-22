@@ -13,11 +13,11 @@ export default function Login({ route, navigation }) {
     const [visible, setVisible] = useState('')
 
     useFocusEffect(() => {
-        if (!getToken() || route.params.logout){
+        if (!getToken() || route.params.logout) {
             console.log('display login')
             setVisible(true)
         }
-        else{
+        else {
             setVisible(false)
             console.log('dont display login')
             setTimeout(() => { navigation.navigate('Main') }, 2000)
@@ -46,30 +46,30 @@ export default function Login({ route, navigation }) {
         }
     }
 
-    if(visible){
-            return (
-                <View style={Styles.loginBody} >
+    if (visible) {
+        return (
+            <View style={Styles.loginBody} >
                 <Image style={Styles.loginLogo} source={require('../assets/carly_logo.png')} />
-                    <TextInput
+                <TextInput
                     style={Styles.loginTextinput}
                     placeholder='Enter your login'
                     value={name}
                     onChangeText={(value) => setName(value)}
-                    />
-                    <TextInput
+                />
+                <TextInput
                     style={Styles.loginTextinput}
                     placeholder='Password'
                     value={password}
                     onChangeText={(value) => setPassword(value)}
                     secureTextEntry={true} />
-                    <Button title='Login' onPress={handleLogin} />
-                </View>
-            )
+                <Button title='Login' onPress={handleLogin} />
+            </View>
+        )
     }
     else {
         return (
             <View style={Styles.loginBody} >
-            <Image style={Styles.loginLogo} source={require('../assets/carly_logo.png')} />
+                <Image style={Styles.loginLogo} source={require('../assets/carly_logo.png')} />
             </View>
         )
     }
