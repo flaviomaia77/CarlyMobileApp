@@ -5,7 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         margin: 0,
         backgroundColor: '#eef',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
     },
     scrollview: {
@@ -34,6 +34,10 @@ export default StyleSheet.create({
     cancelbutton: {
         alignItems: 'flex-end',
         margin: 5,
+    },
+    loginInfo: {
+        textAlign: 'left',
+        color: '#ff0000',
     },
 
 

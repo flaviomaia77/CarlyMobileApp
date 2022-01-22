@@ -27,7 +27,7 @@ export const getCarById = async (id) => {
 
 export const getImage = async (id) => {
     try {
-        const token = await getToken(token)
+        const { token } = await getToken(token)
 
         return axios
             .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {

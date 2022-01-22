@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import Styles from './Styles';
 
 export default function Login({ route, navigation }) {
-    const { setUserName } = route.params;
 
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -38,7 +37,8 @@ export default function Login({ route, navigation }) {
                     Alert.alert('Server error.')
                 }
 
-                setToken(await response.data.jwttoken)
+                const token = await response.data.jwttoken
+                setToken(name, token)
                 setPassword('')
                 navigation.navigate('Main')
             } catch (err) {

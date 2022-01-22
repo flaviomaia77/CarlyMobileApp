@@ -37,7 +37,7 @@ const CarDetails = ({ navigation, route }) => {
         <View>
             <Button title={'Back'} onPress={onPressHandler} />
 
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsVerticalScrollIndicator={true}>
                 <RenderedImages />
             </ScrollView>
 
@@ -47,7 +47,7 @@ const CarDetails = ({ navigation, route }) => {
             <Text style={styles.text} >
                 {item.price}
             </Text>
-        </View>
+        </View >
     )
 
 }

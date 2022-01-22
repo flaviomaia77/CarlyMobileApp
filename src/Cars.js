@@ -18,10 +18,10 @@ export default function Cars({ navigation, route }) {
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const token = await getToken(token)
+                const { name, token } = await getToken()
                 if (token) {
-                    setName(token)
-                    console.log('cars effect:', token)
+                    setName(name)
+                    console.log('cars effect:', name)
                 }
 
                 const response = await getCars(token)
@@ -53,7 +53,7 @@ export default function Cars({ navigation, route }) {
 
     return (
         <View style={styles.body}>
-            <Text> Logged as {name} ! </Text>
+            <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
             <TextInput placeholder='Search Cars' style={styles.carsTextInput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
             {/* <FlatList style={styles.carsFlatlist}
         keyExtractor={(item) => item.id}
