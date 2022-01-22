@@ -65,25 +65,6 @@ export default StyleSheet.create({
         elevation: 5,
     },
 
-
-    carsText: {
-        display: 'flex',
-        fontSize: 15,
-        textAlign: 'center',
-        alignItems: 'flex-start',
-        margin: 2
-    },
-    carsDescription: {
-        width: '65%',
-        fontSize: 15,
-        textAlign: 'center',
-    },
-    carsImage: {
-        width: 120,
-        height: 120,
-        alignItems: 'flex-start',
-        margin: 5
-    },
     carsComponent: {
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -99,16 +80,46 @@ export default StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    carsTextinput: {
-        borderRadius: 15,
-        backgroundColor: '#fff',
-        width: '95%',
+    carsDescription: {
+        width: '65%',
+        fontSize: 15,
         textAlign: 'center',
     },
     carsFlatlist: {
         flex: 1,
         width: '100%',
         margin: 5
+    },
+    carsFeature: {
+        fontWeight: "bold",
+    },
+    carsImage: {
+        width: 120,
+        height: 120,
+        alignItems: 'flex-start',
+        margin: 5
+    },
+    carsDetailsImage: {
+        width: 120,
+        height: 120,
+        alignItems: 'flex-start',
+        borderColor: '#000',
+        borderWidth: 1,
+        margin: 2
+    },
+    carsText: {
+        display: 'flex',
+        fontSize: 15,
+        textAlign: 'left',
+        alignItems: 'flex-start',
+        margin: 2,
+        marginLeft: 5
+    },
+    carsTextInput: {
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        width: '95%',
+        textAlign: 'center',
     },
 
     loginBody: {
@@ -131,6 +142,11 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         marginBottom: 10,
+    },
+
+    imageContainer: {
+        flex: 0,
+        flexDirection: 'row',
     }
 })
 

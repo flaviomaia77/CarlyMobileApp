@@ -5,23 +5,42 @@ import {
     Text,
     Button,
     StyleSheet,
-    Image
+    Image,
+    Dimensions,
+    ScrollView
 } from 'react-native';
+import GridImageView from 'react-native-grid-image-viewer/components/GridImageViewer';
 import styles from "./Styles";
 
 const CarDetails = ({ navigation, route }) => {
 
-    const { item } = route.params;
+    const { item, images } = route.params;
+    const screenWidth = Dimensions.get("window").width
 
     const onPressHandler = () => {
         navigation.goBack();
     }
 
-    return (
+    const RenderedImages = () => {
+        return (
+            images.map(
+                (image, index) =>
+                    <Image
+                        key={index}
+                        style={styles.carsDetailsImage}
+                        source={{ uri: 'data:image/png;base64,' + image }}
+                    />
+            ))
+    }
 
+    return (
         <View>
             <Button title={'Back'} onPress={onPressHandler} />
-            <Image style={styles.carsImage} source={{ uri: item.image }} />
+
+            <ScrollView horizontal={true}>
+                <RenderedImages />
+            </ScrollView>
+
             <Text style={styles.text} >
                 {item.carName}
             </Text>

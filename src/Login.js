@@ -8,6 +8,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import Styles from './Styles';
 
 export default function Login({ route, navigation }) {
+    const { setUserName } = route.params;
+
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [visible, setVisible] = useState('')

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Pressable, TextInput, FlatList, Button } from 'react-native';
 import CarComponent from './CarComponent';
 import styles from "./Styles";
-import { CARS } from './data/cars'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getToken, setToken, logOut } from './utils/jwt';
 import { getCars } from './api/cars'
@@ -14,7 +13,6 @@ export default function Cars({ navigation, route }) {
     const [name, setName] = useState('');
     const [cars, setCars] = useState([]);
     const [search, setSearch] = useState('')
-    //const [cars, setCars] = useState(require('./data/cars'));
     const [filteredCars, setFilteredCars] = useState(cars);
 
     useEffect(() => {
@@ -27,7 +25,7 @@ export default function Cars({ navigation, route }) {
                 }
 
                 const response = await getCars(token)
-                //console.log(response.data)
+                console.log(response.data)
                 setCars(response.data)
             } catch (err) {
                 console.log(err)
@@ -56,7 +54,7 @@ export default function Cars({ navigation, route }) {
     return (
         <View style={styles.body}>
             <Text> Logged as {name} ! </Text>
-            <TextInput placeholder='Search Cars' style={styles.carsTextinput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
+            <TextInput placeholder='Search Cars' style={styles.carsTextInput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
             {/* <FlatList style={styles.carsFlatlist}
         keyExtractor={(item) => item.id}
         data={filteredCars}
