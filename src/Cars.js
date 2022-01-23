@@ -34,10 +34,11 @@ export default function Cars({ navigation, route }) {
             }
 
             const response = await getCars(token)
-            console.log(response.data)
+            //console.log(response.data)
             setCars(response.data)
         } catch (err) {
             console.log('fetchCars error')
+            setCars([])
         }
 
         setLoading(false);

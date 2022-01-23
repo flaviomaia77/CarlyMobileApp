@@ -7,6 +7,8 @@ import {
     Alert,
 } from 'react-native';
 import moment from 'moment';
+import { cancelBooking } from './api/bookings';
+import { getToken } from './utils/jwt';
 import styles from "./Styles";
 
 const BookingDetails = ({ navigation, route }) => {
@@ -17,10 +19,23 @@ const BookingDetails = ({ navigation, route }) => {
         navigation.goBack();
     }
 
-    const CancelOrder = () => {
-        Alert.alert('Cancel Order', 'Are you sure you want to cancel this order?', [
-            { text: 'Yes', onPress: () => console.warn('Yes pressed') },
-            { text: 'No', onPress: () => console.warn('No pressed') }])
+    const cancelOrderConfirmation = () => {
+        Alert.alert('Cancel Booking', 'Are you sure you want to cancel this booking?', [
+            { text: 'Yes', onPress: () => cancelOrder() },
+            { text: 'No', onPress: () => null }])
+    }
+
+    const cancelOrder = async () => {
+        try {
+            const { name, token } = await getToken()
+            console.log('token: ', token)
+            const response = await cancelBooking(token, order)
+            console.log('response: ', response)
+        } catch (err) {
+            console.log('cancelOrder error')
+        }
+
+        navigation.goBack();
     }
 
     return (
@@ -66,7 +81,7 @@ const BookingDetails = ({ navigation, route }) => {
                 </Text>
 
 
-                {order.status == 1 ? <Button color="#ff0000" title='Cancel Booking' onPress={CancelOrder} ></Button> : null}
+                {order.status == 1 ? <Button color="#ff0000" title='Cancel Booking' onPress={cancelOrderConfirmation} ></Button> : null}
 
             </View>
         </View>

@@ -101,6 +101,11 @@ const CarDetails = ({ navigation, route }) => {
                     </Text>}
             </View>
 
+            {/* 
+                Server-side pagination is not used here since the array containing 
+                all of the orders associated with the car is kept inside the Car 
+                object and cannot be fetched partially.
+            */}
             <View style={styles.carsBookingContainer}>
                 <ScrollView showsHorizontalScrollIndicator={true}>
                     {orders.map((order) => renderedOrder(order))}
