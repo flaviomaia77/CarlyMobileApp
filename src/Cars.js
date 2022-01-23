@@ -1,6 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { Text, View, Pressable, TextInput, FlatList, Button } from 'react-native';
+import {
+    Text,
+    View,
+    TextInput,
+    FlatList,
+    ActivityIndicator,
+    RefreshControl
+} from 'react-native';
 import CarComponent from './CarComponent';
 import styles from "./Styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,28 +17,34 @@ import { getCars } from './api/cars'
 
 export default function Cars({ navigation, route }) {
 
+    const [loading, setLoading] = useState(true);
     const [name, setName] = useState('');
     const [cars, setCars] = useState([]);
     const [search, setSearch] = useState('')
     const [filteredCars, setFilteredCars] = useState(cars);
 
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const { name, token } = await getToken()
-                if (token) {
-                    setName(name)
-                    console.log('cars effect:', name)
-                }
 
-                const response = await getCars(token)
-                console.log(response.data)
-                setCars(response.data)
-            } catch (err) {
-                console.log(err)
+    const fetchCars = async () => {
+        setLoading(true);
+
+        try {
+            const { name, token } = await getToken()
+            if (token) {
+                setName(name)
+                console.log('cars effect:', name)
             }
+
+            const response = await getCars(token)
+            console.log(response.data)
+            setCars(response.data)
+        } catch (err) {
+            console.log(err)
         }
 
+        setLoading(false);
+    }
+
+    useEffect(() => {
         fetchCars()
     }, [])
 
@@ -51,28 +64,38 @@ export default function Cars({ navigation, route }) {
         }
     };
 
+    const renderItem = ({ item }) => {
+        return (
+            <CarComponent
+                item={item} navigation={navigation}
+            />
+        )
+    }
+
     return (
         <View style={styles.body}>
             <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
             <TextInput placeholder='Search Cars' style={styles.carsTextInput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
-            {/* <FlatList style={styles.carsFlatlist}
-        keyExtractor={(item) => item.id}
-        data={filteredCars}
-        renderItem={({ item }) => (
-          <CarComponent
-            item={item} navigation={navigation}
-          />
-        )}
-      /> */}
-            <FlatList style={styles.carsFlatlist}
-                keyExtractor={(item) => item.carId}
-                data={cars}
-                renderItem={({ item }) => (
-                    <CarComponent
-                        item={item} navigation={navigation}
+
+            {loading ?
+
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator
+                        style={styles.loadingIndicator}
+                        size='large'
+                        color='#4285F4'
                     />
-                )}
-            />
+                </View>
+                :
+                <FlatList style={styles.carsFlatlist}
+                    keyExtractor={(item) => item.carId}
+                    data={cars}
+                    renderItem={renderItem}
+                    refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}
+                />
+            }
+
+
         </View>
     )
 }

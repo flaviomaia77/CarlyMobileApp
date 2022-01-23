@@ -14,7 +14,8 @@ export default function Login({ route, navigation }) {
     const [visible, setVisible] = useState('')
 
     useFocusEffect(() => {
-        if (!getToken() || route.params.logout) {
+        const { token } = getToken()
+        if (!token || route.params.logout) {
             console.log('display login')
             setVisible(true)
         }

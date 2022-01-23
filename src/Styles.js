@@ -5,8 +5,6 @@ export default StyleSheet.create({
         flex: 1,
         margin: 0,
         backgroundColor: '#eef',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
     },
     scrollview: {
         width: '90%',
@@ -73,8 +71,10 @@ export default StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         alignItems: 'flex-start',
+        alignSelf: 'center',
         borderRadius: 5,
-        margin: 10,
+        marginHorizontal: 30,
+        marginVertical: 5,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -92,7 +92,8 @@ export default StyleSheet.create({
     carsFlatlist: {
         flex: 1,
         width: '100%',
-        margin: 5
+        margin: 5,
+        alignSelf: 'center',
     },
     carsFeature: {
         fontWeight: "bold",
@@ -124,6 +125,17 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         width: '95%',
         textAlign: 'center',
+        alignSelf: 'center',
+    },
+
+    loadingIndicator: {
+        margin: 20,
+    },
+
+    loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     loginBody: {

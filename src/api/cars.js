@@ -13,6 +13,7 @@ export const getCars = async (token, pageNum = 0, maxNum = 10) => {
             }
         )
     } catch (err) {
+        console.log('error in getCars')
         throw err
     }
 }
@@ -21,13 +22,14 @@ export const getCarById = async (id) => {
     try {
         return axios.get(`${API_NAME}/${API_ENDPOINTS.car}/${id}`)
     } catch (err) {
+        console.log('error in getCarById')
         throw err
     }
 }
 
 export const getImage = async (id) => {
     try {
-        const { token } = await getToken(token)
+        const { token } = await getToken()
 
         return axios
             .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {
@@ -40,7 +42,7 @@ export const getImage = async (id) => {
                 new Buffer.from(response.data, 'binary').toString('base64')
             )
     } catch (err) {
-        console.log('EEEEEEEEEEEEe')
+        console.log('error in getImage')
         throw err
     }
 }

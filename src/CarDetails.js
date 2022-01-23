@@ -6,16 +6,13 @@ import {
     Button,
     StyleSheet,
     Image,
-    Dimensions,
     ScrollView
 } from 'react-native';
-import GridImageView from 'react-native-grid-image-viewer/components/GridImageViewer';
 import styles from "./Styles";
 
 const CarDetails = ({ navigation, route }) => {
 
     const { item, images } = route.params;
-    const screenWidth = Dimensions.get("window").width
 
     const onPressHandler = () => {
         navigation.goBack();
