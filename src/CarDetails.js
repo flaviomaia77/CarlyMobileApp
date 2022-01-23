@@ -93,7 +93,6 @@ const CarDetails = ({ navigation, route }) => {
                 </Text>
 
 
-
                 {orders.length > 0 ?
                     null
                     :

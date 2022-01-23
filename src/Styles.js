@@ -100,6 +100,7 @@ export default StyleSheet.create({
         marginLeft: 5
     },
     carsBookingContainer: {
+        height: '40%',
         margin: 2,
         marginLeft: 5,
         borderColor: '#000',
