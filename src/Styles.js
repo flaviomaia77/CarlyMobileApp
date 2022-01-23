@@ -29,10 +29,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    cancelbutton: {
-        alignItems: 'flex-end',
-        margin: 5,
-    },
+
     loginInfo: {
         textAlign: 'left',
         color: '#ff0000',
@@ -67,6 +64,22 @@ export default StyleSheet.create({
         elevation: 5,
     },
 
+    carsBookingHeader: {
+        display: 'flex',
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: 'left',
+        alignItems: 'flex-start',
+        margin: 2,
+        marginLeft: 5
+    },
+    carsBookingContainer: {
+        margin: 2,
+        marginLeft: 5,
+        borderColor: '#000',
+        borderWidth: 2,
+        borderRadius: 5,
+    },
     carsComponent: {
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -103,6 +116,9 @@ export default StyleSheet.create({
         height: 120,
         alignItems: 'flex-start',
         margin: 5,
+    },
+    carsImagesScroll: {
+        height: 130,
     },
     carsDetailsImage: {
         width: 120,

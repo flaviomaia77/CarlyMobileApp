@@ -64,6 +64,7 @@ function CarsScreen() {
         <DetailsStack.Navigator initialRouteName="CarsList" screenOptions={{ headerShown: false }}>
             <DetailsStack.Screen name="CarsList" component={Cars} />
             <DetailsStack.Screen name="CarDetails" component={CarDetails} />
+            <DetailsStack.Screen name="BookingDetails" component={BookingDetails} />
         </DetailsStack.Navigator>
     );
 }
