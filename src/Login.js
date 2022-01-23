@@ -9,8 +9,8 @@ import Styles from './Styles';
 
 export default function Login({ route, navigation }) {
 
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
+    const [name, setName] = useState('Muratcan')
+    const [password, setPassword] = useState('muratcan')
     const [visible, setVisible] = useState('')
 
     useFocusEffect(() => {
@@ -39,6 +39,7 @@ export default function Login({ route, navigation }) {
                 }
 
                 const token = await response.data.jwttoken
+
                 setToken(name, token)
                 setPassword('')
                 navigation.navigate('Main')

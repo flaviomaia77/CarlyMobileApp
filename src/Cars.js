@@ -29,7 +29,7 @@ export default function Cars({ navigation, route }) {
 
         try {
             const { name, token } = await getToken()
-            if (!name & token) {
+            if (token) {
                 setName(name)
             }
 
