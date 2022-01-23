@@ -70,7 +70,7 @@ export default StyleSheet.create({
     carsComponent: {
         flexDirection: 'row',
         backgroundColor: '#fff',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 5,
         marginHorizontal: 30,
@@ -102,7 +102,7 @@ export default StyleSheet.create({
         width: 120,
         height: 120,
         alignItems: 'flex-start',
-        margin: 5
+        margin: 5,
     },
     carsDetailsImage: {
         width: 120,
@@ -126,6 +126,7 @@ export default StyleSheet.create({
         width: '95%',
         textAlign: 'center',
         alignSelf: 'center',
+        marginTop: 5,
     },
 
     loadingIndicator: {

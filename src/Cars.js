@@ -29,16 +29,15 @@ export default function Cars({ navigation, route }) {
 
         try {
             const { name, token } = await getToken()
-            if (token) {
+            if (!name & token) {
                 setName(name)
-                console.log('cars effect:', name)
             }
 
             const response = await getCars(token)
             console.log(response.data)
             setCars(response.data)
         } catch (err) {
-            console.log(err)
+            console.log('fetchCars error')
         }
 
         setLoading(false);
@@ -65,11 +64,13 @@ export default function Cars({ navigation, route }) {
     };
 
     const renderItem = ({ item }) => {
-        return (
-            <CarComponent
-                item={item} navigation={navigation}
-            />
-        )
+        if (item.active) {
+            return (
+                <CarComponent
+                    item={item} navigation={navigation}
+                />
+            )
+        }
     }
 
     return (

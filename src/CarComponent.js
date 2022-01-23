@@ -35,12 +35,14 @@ const CarComponent = (props) => {
             <Pressable onPress={onPressHandler} style={styles.carsComponent} >
                 <Image style={styles.carsImage} source={{ uri: 'data:image/png;base64,' + images[0] }} />
                 <View style={styles.carsDescription}>
-                    {/* <Text style={styles.carsText} >
-                        ImageID: {props.item.images[0]}
+                    <Text style={styles.carsText} >
+                        <Text style={styles.carsFeature}>Active: </Text>
+                        <Text>{props.item.active ? 'Yes' : 'No'}</Text>
                     </Text>
                     <Text style={styles.carsText} >
-                        CarID: {props.item.carId}
-                    </Text> */}
+                        <Text style={styles.carsFeature}>CarID: </Text>
+                        <Text>{props.item.carId}</Text>
+                    </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Name: </Text>
                         <Text>{props.item.carName}</Text>
@@ -59,7 +61,7 @@ const CarComponent = (props) => {
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Price: </Text>
-                        <Text>{props.item.price}</Text>
+                        <Text>{props.item.price} PLN/day</Text>
                     </Text>
                 </View>
             </Pressable>

@@ -4,7 +4,6 @@ import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
 export const getCars = async (token, pageNum = 0, maxNum = 10) => {
-    console.log('getCars:', token)
     try {
         return await axios.get(
             `${API_NAME}/${API_ENDPOINTS.car}?pageNum=${pageNum}&maxNum=${maxNum}`,
