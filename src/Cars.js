@@ -64,13 +64,11 @@ export default function Cars({ navigation, route }) {
     };
 
     const renderItem = ({ item }) => {
-        if (item.active) {
-            return (
-                <CarComponent
-                    item={item} navigation={navigation}
-                />
-            )
-        }
+        return (
+            <CarComponent
+                item={item} navigation={navigation}
+            />
+        )
     }
 
     return (

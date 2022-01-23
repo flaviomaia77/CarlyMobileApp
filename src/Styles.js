@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native"
 export default StyleSheet.create({
     body: {
         flex: 1,
-        margin: 0,
+        marginBottom: 5,
         backgroundColor: '#eef',
     },
     scrollview: {
@@ -37,19 +37,8 @@ export default StyleSheet.create({
 
 
 
-    bookingsTextinput: {
-        borderRadius: 15,
-        backgroundColor: '#eee',
-        width: '95%',
-        textAlign: 'center',
-    },
-    bookingsFlatlist: {
-        flex: 1,
-        width: '100%',
-        margin: 5
-    },
     bookingsComponent: {
-        height: 100,
+        height: 125,
         backgroundColor: '#aaf',
         alignItems: 'flex-start',
         borderRadius: 5,
@@ -63,6 +52,43 @@ export default StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+    bookingsCancelledComponent: {
+        height: 125,
+        backgroundColor: '#f00',
+        alignItems: 'flex-start',
+        borderRadius: 5,
+        margin: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    bookingDetails: {
+        width: '100%',
+        margin: 5,
+    },
+    bookingsDescription: {
+        width: '100%',
+        fontSize: 15,
+        textAlign: 'left',
+    },
+    bookingsFlatlist: {
+        flex: 1,
+        width: '100%',
+        margin: 5
+    },
+    bookingsTextinput: {
+        borderRadius: 15,
+        backgroundColor: '#eee',
+        width: '95%',
+        textAlign: 'center',
+    },
+
+
 
     carsBookingHeader: {
         display: 'flex',

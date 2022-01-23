@@ -19,7 +19,6 @@ const CarDetails = ({ navigation, route }) => {
 
     useEffect(() => {
         setOrders(item.orders)
-        console.log('orders:', item.orders.length)
     }, [])
 
     const onPressHandler = () => {
@@ -47,7 +46,7 @@ const CarDetails = ({ navigation, route }) => {
     }
 
     return (
-        <View>
+        <View style={styles.body}>
             <Button title={'Back'} onPress={onPressHandler} />
 
             <View style={styles.carsImagesScroll}>
@@ -85,9 +84,15 @@ const CarDetails = ({ navigation, route }) => {
                     <Text style={styles.carsFeature}>Price: </Text>
                     <Text>{item.price} PLN/day</Text>
                 </Text>
+
                 <Text style={styles.carsBookingHeader}>
-                    Active Bookings:
+                    Active Bookings: {orders.length}
                 </Text>
+                <Text style={{ marginLeft: 5 }}>
+                    (Press for details and cancellation)
+                </Text>
+
+
 
                 {orders.length > 0 ?
                     null
@@ -98,7 +103,7 @@ const CarDetails = ({ navigation, route }) => {
             </View>
 
             <View style={styles.carsBookingContainer}>
-                <ScrollView>
+                <ScrollView showsHorizontalScrollIndicator={true}>
                     {orders.map((order) => renderedOrder(order))}
                 </ScrollView>
             </View>
