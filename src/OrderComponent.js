@@ -12,7 +12,7 @@ const OrderComponent = (props) => {
 
     return (
         <View >
-            <Text>hello</Text>
+            <Text>orderID: {props.item.orderId}</Text>
         </View>
     )
 
