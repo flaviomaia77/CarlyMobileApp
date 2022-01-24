@@ -9,7 +9,7 @@ const CarComponent = (props) => {
     const [images, setImages] = useState([]);
 
     const onPressHandler = () => {
-        props.navigation.navigate('CarDetails', { item: props.item, images: images })
+        props.navigation.navigate('CarDetails', { carId: props.item.carId, images: images })
     }
 
     useEffect(() => {

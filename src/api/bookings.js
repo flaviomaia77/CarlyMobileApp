@@ -27,17 +27,19 @@ import { Buffer } from 'buffer'
 //     }
 // }
 
-export const cancelBooking = async (token, order) => {
-
+export const cancelBooking = async (token, booking) => {
+    console.log(booking.orderId)
+    console.log(booking.booklyId)
+    console.log(booking.car)
     const body = {
-        orderId: order.orderId,
+        orderId: booking.orderId,
         status: 2,
-        booklyId: order.booklyId,
+        booklyId: booking.booklyId,
     }
 
     try {
         return await axios.patch(
-            `${API_NAME}/${API_ENDPOINTS.car}/${order.car}/${API_ENDPOINTS.booking}/`,
+            `${API_NAME}/${API_ENDPOINTS.cars}/${booking.car}/${API_ENDPOINTS.booking}`,
             JSON.stringify(body),
             {
                 headers: {

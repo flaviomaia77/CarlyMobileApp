@@ -6,7 +6,7 @@ import { Buffer } from 'buffer'
 export const getCars = async (token, pageNum = 0, maxNum = 10) => {
     try {
         return await axios.get(
-            `${API_NAME}/${API_ENDPOINTS.car}?pageNum=${pageNum}&maxNum=${maxNum}`,
+            `${API_NAME}/${API_ENDPOINTS.cars}?pageNum=${pageNum}&maxNum=${maxNum}`,
             {
                 headers: { Authorization: 'Bearer ' + token },
             }
@@ -17,11 +17,18 @@ export const getCars = async (token, pageNum = 0, maxNum = 10) => {
     }
 }
 
-export const getCarById = async (id) => {
+export const getCarById = async (token, carId) => {
     try {
-        return axios.get(`${API_NAME}/${API_ENDPOINTS.car}/${id}`)
+        console.log('getCarById carId:', carId)
+
+        return await axios.get(
+            `${API_NAME}/${API_ENDPOINTS.cars}/${carId}`,
+            {
+                headers: { Authorization: 'Bearer ' + token },
+            }
+        )
     } catch (err) {
-        console.log('error in getCarById')
+        console.log('error in getCarById:', err)
         throw err
     }
 }
@@ -32,9 +39,7 @@ export const getImage = async (id) => {
 
         return axios
             .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + token,
-                },
+                headers: { Authorization: 'Bearer ' + token },
                 responseType: 'arraybuffer',
             })
             .then((response) =>

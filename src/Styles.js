@@ -146,6 +146,19 @@ export default StyleSheet.create({
     },
     carsImagesScroll: {
         height: 130,
+        borderColor: '#000000',
+        borderWidth: 1,
+        borderRadius: 3,
+    },
+    carsImagesScrollLoading: {
+
+        height: 130,
+        backgroundColor: '#ffffff',
+        borderColor: '#000000',
+        borderWidth: 1,
+        borderRadius: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     carsDetailsImage: {
         width: 120,
