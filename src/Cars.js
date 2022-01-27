@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import CarComponent from './CarComponent';
 import styles from "./Styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getToken, setToken, logOut } from './utils/jwt';
+import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
 
 
@@ -21,14 +20,38 @@ export default function Cars({ navigation, route }) {
     const [name, setName] = useState('');
     const [cars, setCars] = useState([]);
     const [search, setSearch] = useState('')
-    const [filteredCars, setFilteredCars] = useState(cars);
+    const [debouncedSearch, setDebouncedSearch] = useState('')
 
+    useEffect(() => {
+        const displayLoginName = async () => {
+            const name = await getName()
+            if (name) { // in fact, name should never be null since logged in
+                setName(name)
+            }
+        }
+
+        displayLoginName()
+        fetchCars()
+    }, [])
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 500)
+
+        return (() =>
+            clearTimeout(timerId))
+    }, [search])
+
+    useEffect(() => {
+        fetchCars()
+    }, [debouncedSearch])
 
     const fetchCars = async () => {
         setLoading(true)
 
         try {
-            const response = await getCars()
+            const response = await getCars(search)
             //console.log(response.data)
             setCars(response.data)
         } catch (err) {
@@ -39,35 +62,9 @@ export default function Cars({ navigation, route }) {
         setLoading(false);
     }
 
-    useEffect(() => {
-        const displayLoginName = async () => {
-            const { name } = await getToken()
-            if (name) { // in fact, name should never be null since logged in
-                setName(name)
-            }
-        }
-
-        displayLoginName()
-        fetchCars()
-    }, [])
-
-
-    const searchFilterFunction = (text) => {
-        if (text) {
-            const newData = cars.filter(function (item) {
-                const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-                const textData = text.toUpperCase();
-                return itemData.indexOf(textData) > -1;
-            });
-
-            setFilteredCars(newData);
-            setSearch(text);
-        }
-        else {
-            setFilteredCars(cars);
-            setSearch(text);
-        }
-    };
+    const searchCars = async (text) => {
+        setSearch(text)
+    }
 
     const renderItem = ({ item }) => {
         return (
@@ -81,7 +78,12 @@ export default function Cars({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
 
-            <TextInput placeholder='Search Cars' style={styles.searchBox} value={search} onChangeText={(text) => searchFilterFunction(text)} />
+            <TextInput
+                placeholder='Search Cars'
+                style={styles.searchBox}
+                value={search}
+                onChangeText={(text) => searchCars(text)}
+            />
 
             {loading ?
 

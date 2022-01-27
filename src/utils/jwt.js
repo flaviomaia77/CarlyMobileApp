@@ -15,3 +15,8 @@ export const getToken = async () => {
     const name = await AsyncStorage.getItem('loginName')
     return { name, token }
 }
+
+export const getName = async () => {
+    const name = await AsyncStorage.getItem('loginName')
+    return name
+}

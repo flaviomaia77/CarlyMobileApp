@@ -3,12 +3,14 @@ import { API_NAME, API_ENDPOINTS } from './index.js'
 import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
-export const getCars = async (pageNum = 0, maxNum = 10) => {
+export const getCars = async (keyword = '', pageNum = 0, maxNum = 10) => {
     const { token } = await getToken()
+
+    if (keyword) { keyword = `&keyword=${keyword}` }
 
     try {
         return await axios.get(
-            `${API_NAME}/${API_ENDPOINTS.cars}?pageNum=${pageNum}&maxNum=${maxNum}`,
+            `${API_NAME}/${API_ENDPOINTS.cars}?pageNum=${pageNum}&maxNum=${maxNum}${keyword}`,
             {
                 headers: { Authorization: 'Bearer ' + token },
             }

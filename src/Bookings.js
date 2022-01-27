@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
     Text,
     View,
@@ -7,21 +7,20 @@ import {
     FlatList,
     ActivityIndicator,
     RefreshControl
-} from 'react-native';
-import BookingComponent from './BookingComponent';
-import styles from "./Styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getToken, setToken, logOut } from './utils/jwt';
+} from 'react-native'
+import BookingComponent from './BookingComponent'
+import styles from "./Styles"
+import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
 
 
 export default function Bookings({ navigation, route }) {
 
-    const [loading, setLoading] = useState(true);
-    const [name, setName] = useState('');
-    const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const [name, setName] = useState('')
+    const [bookings, setBookings] = useState([])
     const [search, setSearch] = useState('')
-    const [filteredBookings, setFilteredBookings] = useState(bookings);
+
 
 
     const fetchBookings = async () => {
@@ -29,19 +28,18 @@ export default function Bookings({ navigation, route }) {
 
         try {
             const response = await getBookings()
-            //console.log('Bookings: \n', response.data)
             setBookings(response.data)
         } catch (err) {
             console.log('fetchBookings error')
             setBookings([])
         }
 
-        setLoading(false);
+        setLoading(false)
     }
 
     useEffect(() => {
         const displayLoginName = async () => {
-            const { name } = await getToken()
+            const name = await getName()
             if (name) { // in fact, name should never be null since logged in
                 setName(name)
             }
@@ -51,27 +49,10 @@ export default function Bookings({ navigation, route }) {
         fetchBookings()
     }, [])
 
-
-    const searchFilterFunction = (text) => {
-        if (text) {
-            const newData = bookings.filter(function (item) {
-                const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-                const textData = text.toUpperCase();
-                return itemData.indexOf(textData) > -1;
-            });
-            setFilteredBookings(newData);
-            setSearch(text);
-            console.log(newData)
-        } else {
-            setFilteredBookings(bookings);
-            setSearch(text);
-        }
-    };
-
     const renderItem = ({ item }) => {
         return (
             <BookingComponent
-                key={item.orderId} booking={item} navigation={navigation}
+                booking={item} navigation={navigation}
             />
         )
     }
