@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-    Pressable,
     Text,
-    Button,
-    StyleSheet,
     Image,
     ScrollView,
-    FlatList,
     DeviceEventEmitter
 } from 'react-native';
 import { getCarById, getImage } from './api/cars';

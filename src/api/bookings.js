@@ -3,7 +3,7 @@ import { API_NAME, API_ENDPOINTS } from './index.js'
 import { getToken } from '../utils/jwt'
 
 export const getBookings = async (keyword = '', pageNum = 0, maxNum = 10) => {
-    const { token } = await getToken()
+    const token = await getToken()
 
     if (keyword) { keyword = `&keyword=${keyword}` }
 

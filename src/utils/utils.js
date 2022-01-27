@@ -4,6 +4,7 @@ import {
     Text,
     TouchableHighlight,
 } from 'react-native'
+
 import Styles from '../Styles'
 
 export const LoadingIndicator = () => {

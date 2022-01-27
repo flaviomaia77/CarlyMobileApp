@@ -8,8 +8,9 @@ import {
     ActivityIndicator,
     RefreshControl
 } from 'react-native';
-import CarComponent from './CarComponent';
+
 import Styles from "./Styles";
+import CarComponent from './CarComponent';
 import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
 

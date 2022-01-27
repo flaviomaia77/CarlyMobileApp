@@ -13,8 +13,6 @@ import styles from "./Styles"
 import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
 
-
-
 export default function Bookings({ navigation, route }) {
 
     const [loading, setLoading] = useState(true)
@@ -22,6 +20,8 @@ export default function Bookings({ navigation, route }) {
     const [bookings, setBookings] = useState([])
     const [search, setSearch] = useState('')
     const [debouncedSearch, setDebouncedSearch] = useState('')
+
+    //DeviceEventEmitter.addListener("event.bookingCancellation", (bookingCancelled) => reloadOnBookingCancel(bookingCancelled));
 
     useEffect(() => {
         const displayLoginName = async () => {
@@ -61,6 +61,12 @@ export default function Bookings({ navigation, route }) {
 
         setLoading(false)
     }
+
+    // TODO : Test reFetching of bookings after an booking cancellation
+
+    // const reloadOnBookingCancel = (bookingCancelled) => {
+    //     if (bookingCancelled) fetchBookings()
+    // }
 
     const searchBookings = async (text) => {
         setSearch(text)

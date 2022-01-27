@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { API_NAME, API_ENDPOINTS } from './index.js'
-import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
+import { API_NAME, API_ENDPOINTS } from './index.js'
+import { getToken } from '../utils/jwt'
+
 export const getCars = async (keyword = '', pageNum = 0, maxNum = 10) => {
-    const { token } = await getToken()
+    const token = await getToken()
 
     if (keyword) { keyword = `&keyword=${keyword}` }
 
@@ -23,7 +24,7 @@ export const getCars = async (keyword = '', pageNum = 0, maxNum = 10) => {
 
 export const getCarById = async (carId) => {
     try {
-        const { token } = await getToken()
+        const token = await getToken()
 
         return await axios.get(
             `${API_NAME}/${API_ENDPOINTS.cars}/${carId}`,
@@ -39,7 +40,7 @@ export const getCarById = async (carId) => {
 
 export const getImage = async (id) => {
     try {
-        const { token } = await getToken()
+        const token = await getToken()
 
         return axios
             .get(`${API_NAME}/${API_ENDPOINTS.image}/${id}`, {

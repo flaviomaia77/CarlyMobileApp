@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, Button, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getToken, setToken, logOut } from './utils/jwt';
 import { signIn } from './api/auth'
 import { useFocusEffect } from '@react-navigation/native';
