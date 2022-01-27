@@ -69,7 +69,7 @@ export default function Cars({ navigation, route }) {
     const renderItem = ({ item }) => {
         return (
             <CarComponent
-                item={item} navigation={navigation}
+                car={item} navigation={navigation}
             />
         )
     }
@@ -95,12 +95,16 @@ export default function Cars({ navigation, route }) {
                     />
                 </View>
                 :
-                <FlatList style={styles.carsFlatlist}
-                    keyExtractor={(item) => item.carId}
-                    data={cars}
-                    renderItem={renderItem}
-                    refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}
-                />
+                cars.length == 0 ?
+
+                    <Text style={styles.noResultsFoundText}>There are no cars matching the search criteria.</Text>
+                    :
+                    <FlatList style={styles.carsFlatlist}
+                        keyExtractor={(item) => item.carId}
+                        data={cars}
+                        renderItem={renderItem}
+                        refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}
+                    />
             }
         </View>
     )

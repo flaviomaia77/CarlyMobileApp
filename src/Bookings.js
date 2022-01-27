@@ -14,28 +14,14 @@ import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
 
 
+
 export default function Bookings({ navigation, route }) {
 
     const [loading, setLoading] = useState(true)
     const [name, setName] = useState('')
     const [bookings, setBookings] = useState([])
     const [search, setSearch] = useState('')
-
-
-
-    const fetchBookings = async () => {
-        setLoading(true)
-
-        try {
-            const response = await getBookings()
-            setBookings(response.data)
-        } catch (err) {
-            console.log('fetchBookings error')
-            setBookings([])
-        }
-
-        setLoading(false)
-    }
+    const [debouncedSearch, setDebouncedSearch] = useState('')
 
     useEffect(() => {
         const displayLoginName = async () => {
@@ -49,6 +35,38 @@ export default function Bookings({ navigation, route }) {
         fetchBookings()
     }, [])
 
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 500)
+
+        return (() =>
+            clearTimeout(timerId))
+    }, [search])
+
+    useEffect(() => {
+        fetchBookings()
+    }, [debouncedSearch])
+
+    const fetchBookings = async () => {
+        setLoading(true)
+
+        try {
+            const response = await getBookings(search)
+            setBookings(response.data)
+            console.log(response.data)
+        } catch (err) {
+            console.log('fetchBookings error')
+            setBookings([])
+        }
+
+        setLoading(false)
+    }
+
+    const searchBookings = async (text) => {
+        setSearch(text)
+    }
+
     const renderItem = ({ item }) => {
         return (
             <BookingComponent
@@ -61,7 +79,12 @@ export default function Bookings({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
 
-            <TextInput placeholder='Search Bookings' style={styles.searchBox} value={search} onChangeText={(text) => searchFilterFunction(text)} />
+            <TextInput
+                placeholder='Search Bookings'
+                style={styles.searchBox}
+                value={search}
+                onChangeText={(text) => searchBookings(text)}
+            />
 
             {loading ?
 
@@ -73,12 +96,16 @@ export default function Bookings({ navigation, route }) {
                     />
                 </View>
                 :
-                <FlatList style={styles.bookingsFlatlist}
-                    keyExtractor={(item) => item.bookingId}
-                    data={bookings}
-                    renderItem={renderItem}
-                    refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
-                />
+                bookings.length == 0 ?
+
+                    <Text style={styles.noResultsFoundText}>There are no bookings matching the search criteria.</Text>
+                    :
+                    <FlatList style={styles.bookingsFlatlist}
+                        keyExtractor={(item) => item.bookingId}
+                        data={bookings}
+                        renderItem={renderItem}
+                        refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
+                    />
             }
         </View>
     )

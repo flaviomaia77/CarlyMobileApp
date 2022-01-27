@@ -5,6 +5,7 @@ import { getImage } from './api/cars'
 import { useEffect, useState } from 'react';
 
 const CarComponent = (props) => {
+    const car = props.car
 
     const [image, setImage] = useState('');
 
@@ -17,11 +18,11 @@ const CarComponent = (props) => {
                 console.log(err)
             }
         }
-        fetchImage(props.item)
+        fetchImage(car)
     }, [])
 
     const onPressHandler = () => {
-        props.navigation.navigate('CarDetails', { carId: props.item.carId })
+        props.navigation.navigate('CarDetails', { carId: car.carId })
     }
 
     return (
@@ -31,31 +32,31 @@ const CarComponent = (props) => {
                 <View style={styles.carsDescription}>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Active: </Text>
-                        <Text>{props.item.active ? 'Yes' : 'No'}</Text>
+                        <Text>{car.active ? 'Yes' : 'No'}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>CarID: </Text>
-                        <Text>{props.item.carId}</Text>
+                        <Text>{car.carId}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Name: </Text>
-                        <Text>{props.item.carName}</Text>
+                        <Text>{car.carName}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Model: </Text>
-                        <Text>{props.item.carModel}</Text>
+                        <Text>{car.carModel}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Description: </Text>
-                        <Text>{props.item.description}</Text>
+                        <Text>{car.description}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Location: </Text>
-                        <Text>{props.item.location}</Text>
+                        <Text>{car.location}</Text>
                     </Text>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Price: </Text>
-                        <Text>{props.item.price} PLN/day</Text>
+                        <Text>{car.price} PLN/day</Text>
                     </Text>
                 </View>
             </Pressable>

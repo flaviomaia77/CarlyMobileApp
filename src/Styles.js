@@ -32,6 +32,9 @@ export default StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    noResultsFoundText: {
+        margin: 10,
+    },
     text: {
         fontSize: 30,
         alignItems: 'center',
@@ -204,7 +207,7 @@ export default StyleSheet.create({
     loginLogo: {
         width: 150,
         height: 180,
-        marginTop: 200,
+        marginTop: 50,
         marginBottom: 50
     },
     loginTextinput: {
