@@ -3,7 +3,9 @@ import { API_NAME, API_ENDPOINTS } from './index.js'
 import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
-export const getCars = async (token, pageNum = 0, maxNum = 10) => {
+export const getCars = async (pageNum = 0, maxNum = 10) => {
+    const { token } = await getToken()
+
     try {
         return await axios.get(
             `${API_NAME}/${API_ENDPOINTS.cars}?pageNum=${pageNum}&maxNum=${maxNum}`,
@@ -17,9 +19,9 @@ export const getCars = async (token, pageNum = 0, maxNum = 10) => {
     }
 }
 
-export const getCarById = async (token, carId) => {
+export const getCarById = async (carId) => {
     try {
-        console.log('getCarById carId:', carId)
+        const { token } = await getToken()
 
         return await axios.get(
             `${API_NAME}/${API_ENDPOINTS.cars}/${carId}`,

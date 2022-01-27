@@ -14,7 +14,6 @@ import {
 import { getCarById, getImage } from './api/cars';
 import CarBookingComponent from './CarBookingComponent';
 import styles from "./Styles";
-import { getToken } from './utils/jwt';
 
 const CarDetails = ({ navigation, route }) => {
 
@@ -25,15 +24,38 @@ const CarDetails = ({ navigation, route }) => {
     const [loading, setLoading] = useState(true);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [loadingImages, setLoadingImages] = useState(true);
-    const [imagesLoaded, setImagesLoaded] = useState(false);
+
+    DeviceEventEmitter.addListener("event.bookingCancellation", (bookingCancelled) => reloadOnBookingCancel(bookingCancelled));
+
+    useEffect(() => {
+        fetchCar()
+    }, [])
+
+    useEffect(() => {
+        setBookings(car.orders)
+
+        try {
+            functionGetImages(car.images)
+        } catch (err) {
+            console.log(err)
+        }
+    }, [car])
+
+    useEffect(() => {
+        setLoadingOrders(false)
+    }, [bookings])
+
+    useEffect(() => {
+        setLoadingImages(false)
+    }, [images])
+
 
     const fetchCar = async () => {
         setLoading(true);
         setLoadingOrders(true)
 
         try {
-            const { token } = await getToken()
-            const response = await getCarById(token, carId)
+            const response = await getCarById(carId)
             setCar(response.data)
         } catch (err) {
             console.log('fetchCar error')
@@ -43,41 +65,13 @@ const CarDetails = ({ navigation, route }) => {
         setLoading(false);
     }
 
-    useEffect(() => {
-        fetchCar()
-    }, [])
-
-    useEffect(() => {
-        setBookings(car.orders)
-
-        if (!imagesLoaded) { }
-        console.log('LoadingImages')
-        setLoadingImages(true)
-        try {
-            functionGetImages(car.images)
-        } catch (err) {
-            console.log(err)
-        }
-
-    }, [car])
-
-    useEffect(() => {
-        setLoadingOrders(false)
-        if (!bookings) setLoadingOrders(true)
-    }, [bookings])
-
-    useEffect(() => {
-        setLoadingImages(false)
-        if (!images) setLoadingImages(true)
-    }, [images])
-
-    DeviceEventEmitter.addListener("event.bookingCancellation", (bookingCancelled) => reloadOnBookingCancel(bookingCancelled));
-
     const reloadOnBookingCancel = (bookingCancelled) => {
         if (bookingCancelled) fetchCar()
     }
 
     const functionGetImages = async (imageKeys) => {
+        setLoadingImages(true)
+
         let receivedImages = []
         try {
             for (let i = 0; i < imageKeys.length; i++) {
@@ -87,8 +81,8 @@ const CarDetails = ({ navigation, route }) => {
         } catch (err) {
             console.log(err)
         }
+
         setImages(receivedImages)
-        setImagesLoaded(true)
     }
 
     const onPressHandler = () => {
@@ -186,7 +180,7 @@ const CarDetails = ({ navigation, route }) => {
 
                         {bookings.length > 0 ?
                             <Text style={{ marginLeft: 5 }}>
-                                (Press for details and cancellation)
+                                (Choose booking to see details)
                             </Text>
                             :
                             <Text style={styles.carsText} >

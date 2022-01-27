@@ -25,15 +25,10 @@ export default function Cars({ navigation, route }) {
 
 
     const fetchCars = async () => {
-        setLoading(true);
+        setLoading(true)
 
         try {
-            const { name, token } = await getToken()
-            if (token) {
-                setName(name)
-            }
-
-            const response = await getCars(token)
+            const response = await getCars()
             //console.log(response.data)
             setCars(response.data)
         } catch (err) {
@@ -45,6 +40,14 @@ export default function Cars({ navigation, route }) {
     }
 
     useEffect(() => {
+        const displayLoginName = async () => {
+            const { name } = await getToken()
+            if (name) { // in fact, name should never be null since logged in
+                setName(name)
+            }
+        }
+
+        displayLoginName()
         fetchCars()
     }, [])
 
@@ -56,9 +59,11 @@ export default function Cars({ navigation, route }) {
                 const textData = text.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
+
             setFilteredCars(newData);
             setSearch(text);
-        } else {
+        }
+        else {
             setFilteredCars(cars);
             setSearch(text);
         }
@@ -75,6 +80,7 @@ export default function Cars({ navigation, route }) {
     return (
         <View style={styles.body}>
             <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
+
             <TextInput placeholder='Search Cars' style={styles.carsTextInput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
 
             {loading ?
@@ -94,8 +100,6 @@ export default function Cars({ navigation, route }) {
                     refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}
                 />
             }
-
-
         </View>
     )
 }

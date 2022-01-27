@@ -6,34 +6,28 @@ import { useEffect, useState } from 'react';
 
 const CarComponent = (props) => {
 
-    const [images, setImages] = useState([]);
-
-    const onPressHandler = () => {
-        props.navigation.navigate('CarDetails', { carId: props.item.carId, images: images })
-    }
+    const [image, setImage] = useState('');
 
     useEffect(() => {
-        const functionGetImages = async (item) => {
-            let receivedImages = []
-            for (let i = 0; i < item.images.length; i++) {
-                try {
-                    const response = await getImage(item.images[i])
-                    receivedImages.push(response)
-                } catch (err) {
-                    console.log(err)
-                }
+        const fetchImage = async (item) => {
+            try {
+                const response = await getImage(item.images[0])
+                setImage(response)
+            } catch (err) {
+                console.log(err)
             }
-            setImages(receivedImages)
         }
-
-        functionGetImages(props.item)
+        fetchImage(props.item)
     }, [])
 
+    const onPressHandler = () => {
+        props.navigation.navigate('CarDetails', { carId: props.item.carId })
+    }
 
     return (
         <View >
             <Pressable onPress={onPressHandler} style={styles.carsComponent} >
-                <Image style={styles.carsImage} source={{ uri: 'data:image/png;base64,' + images[0] }} />
+                <Image style={styles.carsImage} source={{ uri: 'data:image/png;base64,' + image }} />
                 <View style={styles.carsDescription}>
                     <Text style={styles.carsText} >
                         <Text style={styles.carsFeature}>Active: </Text>
