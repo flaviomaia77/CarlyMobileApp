@@ -4,17 +4,17 @@ import { getToken } from '../utils/jwt'
 import { Buffer } from 'buffer'
 
 export const getBookings = async (pageNum = 0, maxNum = 10) => {
-    const { token } = getToken()
+    const { token } = await getToken()
 
     try {
         return await axios.get(
-            `${API_NAME}/${API_ENDPOINTS.car}?pageNum=${pageNum}&maxNum=${maxNum}`,
+            `${API_NAME}/${API_ENDPOINTS.booking}?pageNum=${pageNum}&maxNum=${maxNum}`,
             {
                 headers: { Authorization: 'Bearer ' + token },
             }
         )
     } catch (err) {
-        console.log('error in getCars')
+        console.log('error in getBookings')
         throw err
     }
 }

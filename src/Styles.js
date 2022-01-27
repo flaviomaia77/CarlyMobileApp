@@ -9,6 +9,14 @@ export default StyleSheet.create({
     scrollview: {
         width: '90%',
     },
+    searchBox: {
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        width: '95%',
+        textAlign: 'center',
+        alignSelf: 'center',
+        marginTop: 5,
+    },
     input: {
         width: 200,
         borderWidth: 1,
@@ -176,14 +184,7 @@ export default StyleSheet.create({
         margin: 2,
         marginLeft: 5
     },
-    carsTextInput: {
-        borderRadius: 15,
-        backgroundColor: '#fff',
-        width: '95%',
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginTop: 5,
-    },
+
 
     loadingIndicator: {
         margin: 20,

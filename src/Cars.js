@@ -81,7 +81,7 @@ export default function Cars({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
 
-            <TextInput placeholder='Search Cars' style={styles.carsTextInput} value={search} onChangeText={(text) => searchFilterFunction(text)} />
+            <TextInput placeholder='Search Cars' style={styles.searchBox} value={search} onChangeText={(text) => searchFilterFunction(text)} />
 
             {loading ?
 

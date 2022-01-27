@@ -12,7 +12,7 @@ import {
     DeviceEventEmitter
 } from 'react-native';
 import { getCarById, getImage } from './api/cars';
-import CarBookingComponent from './CarBookingComponent';
+import BookingComponent from './BookingComponent';
 import styles from "./Styles";
 
 const CarDetails = ({ navigation, route }) => {
@@ -103,7 +103,7 @@ const CarDetails = ({ navigation, route }) => {
 
     const renderedOrder = (booking) => {
         return (
-            <CarBookingComponent
+            <BookingComponent
                 key={booking.orderId} booking={booking} navigation={navigation}
             />
         )
