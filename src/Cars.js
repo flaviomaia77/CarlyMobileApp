@@ -9,7 +9,7 @@ import {
     RefreshControl
 } from 'react-native';
 import CarComponent from './CarComponent';
-import styles from "./Styles";
+import Styles from "./Styles";
 import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
 
@@ -52,7 +52,6 @@ export default function Cars({ navigation, route }) {
 
         try {
             const response = await getCars(search)
-            //console.log(response.data)
             setCars(response.data)
         } catch (err) {
             console.log('fetchCars error')
@@ -75,21 +74,21 @@ export default function Cars({ navigation, route }) {
     }
 
     return (
-        <View style={styles.body}>
-            <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
+        <View style={Styles.body}>
+            <Text style={Styles.loginName}> Logged in as {name} ! </Text>
 
             <TextInput
                 placeholder='Search Cars'
-                style={styles.searchBox}
+                style={Styles.searchBox}
                 value={search}
                 onChangeText={(text) => searchCars(text)}
             />
 
             {loading ?
 
-                <View style={styles.loadingContainer}>
+                <View style={Styles.loadingIndicatorContainer}>
                     <ActivityIndicator
-                        style={styles.loadingIndicator}
+                        style={Styles.loadingIndicator}
                         size='large'
                         color='#4285F4'
                     />
@@ -97,9 +96,9 @@ export default function Cars({ navigation, route }) {
                 :
                 cars.length == 0 ?
 
-                    <Text style={styles.noResultsFoundText}>There are no cars matching the search criteria.</Text>
+                    <Text style={Styles.noResultsFoundText}>There are no cars matching the search criteria.</Text>
                     :
-                    <FlatList style={styles.carsFlatlist}
+                    <FlatList style={Styles.carsFlatlist}
                         keyExtractor={(item) => item.carId}
                         data={cars}
                         renderItem={renderItem}

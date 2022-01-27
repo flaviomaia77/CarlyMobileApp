@@ -1,30 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    View,
-    Button,
-    Text,
-    StyleSheet,
     Alert,
-    DeviceEventEmitter
+    Button,
+    DeviceEventEmitter,
+    Pressable,
+    Text,
+    View,
 } from 'react-native';
 import moment from 'moment';
 
 import { cancelBooking } from './api/bookings';
-import { getToken } from './utils/jwt';
-import styles from "./Styles";
+import Styles from "./Styles";
+import { getCarById } from './api/cars';
+import { BackButton, Detail, LoadingIndicator } from './utils/utils';
 
 const BookingDetails = ({ navigation, route }) => {
 
-    const { booking } = route.params;
+    const { booking, displayCarData } = route.params;
+    const [car, setCar] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        fetchCar()
+
         return () => {
             DeviceEventEmitter.removeAllListeners("event.mapMarkerSelected")
         };
     }, []);
 
+    useEffect(() => {
+        setLoading(false);
+    }, [car])
+
+    const fetchCar = async () => {
+        try {
+            const response = await getCarById(booking.carId)
+            setCar(response.data)
+        } catch (err) {
+            console.log('fetchCar error')
+            setCar(null)
+        }
+    }
+
     const onPressHandler = () => {
         navigation.goBack();
+    }
+
+    const goToCarDetailsHandler = () => {
+        navigation.navigate('CarDetails', { carId: car.carId })
     }
 
     const cancelBookingConfirmation = () => {
@@ -35,10 +58,9 @@ const BookingDetails = ({ navigation, route }) => {
 
     const functionCancelBooking = async () => {
         try {
-            const { token } = await getToken()
-            console.log('token: ', token)
-            const response = await cancelBooking(token, booking)
-            console.log('response: ', response)
+            const response = await cancelBooking(booking)
+            // TODO: check if response is OK and display notification to user
+            // whether cancellation was succesful or not
         } catch (err) {
             console.log('functionCancelBooking error')
         }
@@ -48,51 +70,46 @@ const BookingDetails = ({ navigation, route }) => {
     }
 
     return (
-        <View style={styles.bookingDetails}>
-            <Button title={'Back'} onPress={onPressHandler} />
+        <View style={Styles.details}>
+            {loading ?
+                <LoadingIndicator />
+                :
+                <View>
+                    <BackButton onPressHandler={onPressHandler} />
 
-            <View style={styles.bookingsDescription}>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booking ID: </Text>
-                    <Text>{booking.orderId}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booked Car ID: </Text>
-                    <Text>{booking.car}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Bookly ID: </Text>
-                    <Text>{booking.booklyId}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booked To: </Text>
-                    <Text>{booking.firstName} {booking.lastName}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booking Creation: </Text>
-                    <Text>{moment(booking.createTime).format('DD-MM-YYYY, h:mm:ss a')}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booking Start: </Text>
-                    <Text>{moment(booking.startDate).format('DD-MM-YYYY, h:mm:ss a')}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booking End: </Text>
-                    <Text>{moment(booking.endDate).format('DD-MM-YYYY, h:mm:ss a')}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Last Update: </Text>
-                    <Text>{moment(booking.updateTime).format('DD-MM-YYYY, h:mm:ss a')}</Text>
-                </Text>
-                <Text style={styles.carsText} >
-                    <Text style={styles.carsFeature}>Booking Status: </Text>
-                    <Text>{booking.status == 1 ? 'Active' : booking.status == 2 ? 'Cancelled by Admin' : 'Cancelled by Bookly'}</Text>
-                </Text>
+                    <Text style={Styles.headingText}>Booking Details:</Text>
 
+                    <Detail title="Booking Id" value={booking.orderId} />
+                    <Detail title="Bookly Id" value={booking.booklyId} />
+                    <Detail title="Booked To" value={booking.firstName + ' ' + booking.lastName} />
+                    <Detail title="Booking Creation" value={moment(booking.createTime).format('DD-MM-YYYY, h:mm:ss a')} />
+                    <Detail title="Booking Start" value={moment(booking.startDate).format('DD-MM-YYYY, h:mm:ss a')} />
+                    <Detail title="Booking End" value={moment(booking.endDate).format('DD-MM-YYYY, h:mm:ss a')} />
+                    <Detail title="Last Update" value={moment(booking.updateTime).format('DD-MM-YYYY, h:mm:ss a')} />
+                    <Detail title="Booking Status" value={booking.status == 1 ? 'Active' : booking.status == 2 ? 'Cancelled by Admin' : 'Cancelled by Bookly'} />
 
-                {booking.status == 1 ? <Button color="#ff0000" title='Cancel Booking' onPress={cancelBookingConfirmation} ></Button> : null}
+                    {!displayCarData ?
+                        null
+                        : !car ?
+                            <Text style={Styles.noResultsFoundText}>Car data not available.</Text>
+                            :
+                            <View>
+                                <View style={Styles.carsDetailsComponent, { marginTop: 10 }}>
+                                    <Detail title="Booked Car Id" value={booking.carId} />
+                                    <Detail title="Booked Car Name" value={car.carName} />
+                                    <Detail title="Booked Car Model" value={car.carModel} />
+                                    <Detail title="Booked Car Location" value={car.location} />
+                                </View>
 
-            </View>
+                                <Pressable onPress={goToCarDetailsHandler} style={Styles.goToCarDetailsButton} >
+                                    <Text>Press to see details of the booked car</Text>
+                                </Pressable>
+                            </View>
+                    }
+
+                    {booking.status == 1 ? <Button color="#ff0000" title='Cancel Booking' onPress={cancelBookingConfirmation} ></Button> : null}
+                </View>
+            }
         </View>
 
     )

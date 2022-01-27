@@ -3,6 +3,7 @@ import { View, Pressable, Text, Image } from 'react-native';
 import styles from "./Styles";
 import { getImage } from './api/cars'
 import { useEffect, useState } from 'react';
+import { Detail } from './utils/utils';
 
 const CarComponent = (props) => {
     const car = props.car
@@ -29,35 +30,13 @@ const CarComponent = (props) => {
         <View >
             <Pressable onPress={onPressHandler} style={styles.carsComponent} >
                 <Image style={styles.carsImage} source={{ uri: 'data:image/png;base64,' + image }} />
-                <View style={styles.carsDescription}>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Active: </Text>
-                        <Text>{car.active ? 'Yes' : 'No'}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>CarID: </Text>
-                        <Text>{car.carId}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Name: </Text>
-                        <Text>{car.carName}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Model: </Text>
-                        <Text>{car.carModel}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Description: </Text>
-                        <Text>{car.description}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Location: </Text>
-                        <Text>{car.location}</Text>
-                    </Text>
-                    <Text style={styles.carsText} >
-                        <Text style={styles.carsFeature}>Price: </Text>
-                        <Text>{car.price} PLN/day</Text>
-                    </Text>
+
+                <View style={styles.carsDetailsComponent}>
+                    <Detail title="Active" value={car.active ? 'Yes' : 'No'} />
+                    <Detail title="CarId" value={car.carId} />
+                    <Detail title="Name" value={car.carName} />
+                    <Detail title="Model" value={car.carModel} />
+                    <Detail title="Location" value={car.location} />
                 </View>
             </Pressable>
         </View>

@@ -6,47 +6,66 @@ export default StyleSheet.create({
         marginBottom: 5,
         backgroundColor: '#eef',
     },
-    scrollview: {
-        width: '90%',
+    backButton: {
+        width: '100%',
+        borderRadius: 10,
+        marginBottom: 5,
+    },
+    detailContainer: {
+        display: 'flex',
+        fontSize: 15,
+        textAlign: 'left',
+        alignItems: 'flex-start',
+        margin: 2,
+        marginLeft: 5
+    },
+    detailText: {
+        fontWeight: "bold",
+    },
+    loadingIndicator: {
+        margin: 20,
+    },
+    loadingIndicatorContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    loginBody: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#acc',
+    },
+    loginName: {
+        textAlign: 'left',
+        color: '#ff0000',
+    },
+    loginLogo: {
+        width: 150,
+        height: 180,
+        marginTop: 50,
+        marginBottom: 50
+    },
+    loginTextinput: {
+        width: 300,
+        borderWidth: 1,
+        borderColor: '#555',
+        borderRadius: 10,
+        backgroundColor: '#ffffff',
+        textAlign: 'center',
+        fontSize: 20,
+        marginBottom: 10,
+    },
+    noResultsFoundText: {
+        margin: 5,
     },
     searchBox: {
         borderRadius: 15,
-        backgroundColor: '#fff',
+        backgroundColor: '#BFE0EA',
         width: '95%',
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 5,
     },
-    input: {
-        width: 200,
-        borderWidth: 1,
-        borderColor: '#555',
-        backgroundColor: '#ffffff',
-        textAlign: 'center',
-        margin: 10
-    },
-    bookings: {
-        margin: 5,
-        backgroundColor: '#ffffff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-    },
-    noResultsFoundText: {
-        margin: 10,
-    },
-    text: {
-        fontSize: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    loginInfo: {
-        textAlign: 'left',
-        color: '#ff0000',
-    },
-
-
 
     bookingsComponent: {
         height: 125,
@@ -68,7 +87,7 @@ export default StyleSheet.create({
         backgroundColor: '#f00',
         alignItems: 'flex-start',
         borderRadius: 5,
-        margin: 10,
+        margin: 5,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -78,11 +97,7 @@ export default StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    bookingDetails: {
-        width: '100%',
-        margin: 5,
-    },
-    bookingsDescription: {
+    bookingsDetails: {
         width: '100%',
         fontSize: 15,
         textAlign: 'left',
@@ -90,16 +105,22 @@ export default StyleSheet.create({
     bookingsFlatlist: {
         flex: 1,
         width: '100%',
-        margin: 5
+        marginTop: 5
     },
-    bookingsTextinput: {
-        borderRadius: 15,
-        backgroundColor: '#eee',
-        width: '95%',
-        textAlign: 'center',
+    headingText: {
+        fontWeight: "bold",
+        fontSize: 20,
+        marginTop: 10,
+        marginLeft: 5,
     },
-
-
+    goToCarDetailsButton: {
+        marginTop: 20,
+        marginLeft: 5,
+        borderColor: '#000',
+        borderWidth: 2,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
 
     carsBookingHeader: {
         display: 'flex',
@@ -118,8 +139,10 @@ export default StyleSheet.create({
         borderWidth: 2,
         borderRadius: 5,
     },
+
     carsComponent: {
         flexDirection: 'row',
+        width: '100%',
         backgroundColor: '#fff',
         alignItems: 'center',
         alignSelf: 'center',
@@ -135,19 +158,17 @@ export default StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    carsDescription: {
-        width: '65%',
-        fontSize: 15,
-        textAlign: 'center',
+    details: {
+        width: '100%',
+    },
+    carsDetailsComponent: {
+        width: '70%',
     },
     carsFlatlist: {
         flex: 1,
-        width: '100%',
+        width: '96%',
         margin: 5,
         alignSelf: 'center',
-    },
-    carsFeature: {
-        fontWeight: "bold",
     },
     carsImage: {
         width: 120,
@@ -155,19 +176,14 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         margin: 5,
     },
-    carsImagesScroll: {
+    carsImagesContainer: {
         height: 130,
-        borderColor: '#000000',
-        borderWidth: 1,
-        borderRadius: 3,
-    },
-    carsImagesScrollLoading: {
-
-        height: 130,
+        width: '96%',
         backgroundColor: '#ffffff',
         borderColor: '#000000',
         borderWidth: 1,
         borderRadius: 3,
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -179,51 +195,5 @@ export default StyleSheet.create({
         borderWidth: 1,
         margin: 2
     },
-    carsText: {
-        display: 'flex',
-        fontSize: 15,
-        textAlign: 'left',
-        alignItems: 'flex-start',
-        margin: 2,
-        marginLeft: 5
-    },
-
-
-    loadingIndicator: {
-        margin: 20,
-    },
-
-    loadingContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    loginBody: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#acc',
-    },
-    loginLogo: {
-        width: 150,
-        height: 180,
-        marginTop: 50,
-        marginBottom: 50
-    },
-    loginTextinput: {
-        width: 300,
-        borderWidth: 1,
-        borderColor: '#555',
-        borderRadius: 10,
-        backgroundColor: '#ffffff',
-        textAlign: 'center',
-        fontSize: 20,
-        marginBottom: 10,
-    },
-
-    imageContainer: {
-        flex: 0,
-        flexDirection: 'row',
-    }
 })
 

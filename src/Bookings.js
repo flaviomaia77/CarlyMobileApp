@@ -54,7 +54,6 @@ export default function Bookings({ navigation, route }) {
         try {
             const response = await getBookings(search)
             setBookings(response.data)
-            console.log(response.data)
         } catch (err) {
             console.log('fetchBookings error')
             setBookings([])
@@ -77,7 +76,7 @@ export default function Bookings({ navigation, route }) {
 
     return (
         <View style={styles.body}>
-            <Text style={styles.loginInfo}> Logged in as {name} ! </Text>
+            <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
             <TextInput
                 placeholder='Search Bookings'
@@ -88,7 +87,7 @@ export default function Bookings({ navigation, route }) {
 
             {loading ?
 
-                <View style={styles.loadingContainer}>
+                <View style={styles.loadingIndicatorContainer}>
                     <ActivityIndicator
                         style={styles.loadingIndicator}
                         size='large'

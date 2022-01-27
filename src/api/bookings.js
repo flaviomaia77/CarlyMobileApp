@@ -5,8 +5,6 @@ import { getToken } from '../utils/jwt'
 export const getBookings = async (keyword = '', pageNum = 0, maxNum = 10) => {
     const { token } = await getToken()
 
-    console.log(token)
-
     if (keyword) { keyword = `&keyword=${keyword}` }
 
     try {
@@ -31,15 +29,14 @@ export const getBookings = async (keyword = '', pageNum = 0, maxNum = 10) => {
 //     }
 // }
 
-export const cancelBooking = async (token, booking) => {
-    console.log(booking.orderId)
-    console.log(booking.booklyId)
-    console.log(booking.car)
+export const cancelBooking = async (booking) => {
     const body = {
         orderId: booking.orderId,
         status: 2,
         booklyId: booking.booklyId,
     }
+
+    const token = await getToken()
 
     try {
         return await axios.patch(

@@ -8,12 +8,12 @@ import {
     Image,
     ScrollView,
     FlatList,
-    ActivityIndicator,
     DeviceEventEmitter
 } from 'react-native';
 import { getCarById, getImage } from './api/cars';
 import BookingComponent from './BookingComponent';
-import styles from "./Styles";
+import { LoadingIndicator, BackButton, Detail } from './utils/utils';
+import Styles from "./Styles";
 
 const CarDetails = ({ navigation, route }) => {
 
@@ -95,95 +95,63 @@ const CarDetails = ({ navigation, route }) => {
                 (image, index) =>
                     <Image
                         key={index}
-                        style={styles.carsDetailsImage}
+                        style={Styles.carsDetailsImage}
                         source={{ uri: 'data:image/png;base64,' + image }}
                     />
             ))
     }
 
-    const renderedOrder = (booking) => {
+    const renderedBooking = (booking) => {
         return (
             <BookingComponent
-                key={booking.orderId} booking={booking} navigation={navigation}
+                key={booking.orderId} booking={booking} displayCarData={false} navigation={navigation}
             />
         )
     }
 
     return (
-        <View style={styles.body}>
+        <View style={Styles.body}>
             {loading ?
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator
-                        style={styles.loadingIndicator}
-                        size='large'
-                        color='#4285F4'
-                    />
+                <View style={Styles.loadingIndicatorContainer}>
+                    <LoadingIndicator />
                 </View>
                 :
                 <View>
-                    <Button title={'Back'} onPress={onPressHandler} />
-
-                    {loadingImages ?
-                        <View style={styles.carsImagesScrollLoading}>
-                            <ActivityIndicator
-                                style={styles.loadingIndicator}
-                                size='large'
-                                color='#4285F4'
-                            />
-                        </View>
-                        :
-                        images.length == 0 ?
-                            <View style={styles.carsImagesScrollLoading}>
-                                <Text>Car has no photos...</Text>
-                            </View>
+                    <BackButton onPressHandler={onPressHandler} />
+                    <View style={Styles.carsImagesContainer}>
+                        {loadingImages ?
+                            <LoadingIndicator />
                             :
-                            <View style={styles.carsImagesScroll}>
+                            images.length == 0 ?
+                                <Text>Car has no photos...</Text>
+                                :
                                 <ScrollView horizontal={true}>
                                     <RenderedImages />
                                 </ScrollView>
-                            </View>
-                    }
+                        }
+                    </View>
 
-                    <View style={styles.carsDescription}>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Active: </Text>
-                            <Text>{car.active ? 'Yes' : 'No'}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Car ID: </Text>
-                            <Text>{car.carId}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Name: </Text>
-                            <Text>{car.carName}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Model: </Text>
-                            <Text>{car.carModel}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Description: </Text>
-                            <Text>{car.description}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Location: </Text>
-                            <Text>{car.location}</Text>
-                        </Text>
-                        <Text style={styles.carsText} >
-                            <Text style={styles.carsFeature}>Price: </Text>
-                            <Text>{car.price} PLN/day</Text>
-                        </Text>
+                    <View style={Styles.details}>
+                        <Detail title="Active" value={car.active ? 'Yes' : 'No'} />
+                        <Detail title="CarId" value={car.carId} />
+                        <Detail title="Name" value={car.carName} />
+                        <Detail title="Model" value={car.carModel} />
+                        <Detail title="Description" value={car.description} />
+                        <Detail title="Location" value={car.location} />
+                        <Detail title="Price" value={car.price + ' PLN/day'} />
+                    </View>
 
-                        <Text style={styles.carsBookingHeader}>
+                    <View>
+                        <Text style={Styles.carsBookingHeader}>
                             Total Bookings: {bookings.length}
                         </Text>
 
                         {bookings.length > 0 ?
                             <Text style={{ marginLeft: 5 }}>
-                                (Choose booking to see details)
+                                (Choose booking to see details or cancel)
                             </Text>
                             :
-                            <Text style={styles.carsText} >
+                            <Text style={Styles.detailContainer} >
                                 No bookings present.
                             </Text>}
                     </View>
@@ -197,17 +165,11 @@ const CarDetails = ({ navigation, route }) => {
                         null
                         :
                         loadingOrders ?
-                            <View>
-                                <ActivityIndicator
-                                    style={styles.loadingIndicator}
-                                    size='large'
-                                    color='#4285F4'
-                                />
-                            </View>
+                            <LoadingIndicator />
                             :
-                            <View style={styles.carsBookingContainer}>
-                                <ScrollView showsHorizontalScrollIndicator={true}>
-                                    {bookings.map((booking) => renderedOrder(booking))}
+                            <View style={Styles.carsBookingContainer}>
+                                <ScrollView showsVerticalScrollIndicator={true}>
+                                    {bookings.map((booking) => renderedBooking(booking))}
                                 </ScrollView>
                             </View>
                     }
