@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Pressable, Text, Image } from 'react-native';
-import styles from "./Styles";
+import styles from "./styles";
 import { getImage } from './api/cars'
 import { useEffect, useState } from 'react';
 import { Detail } from './utils/utils';

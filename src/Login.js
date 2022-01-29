@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { getToken, setToken, logOut } from './utils/jwt';
 import { signIn } from './api/auth'
 import { useFocusEffect } from '@react-navigation/native';
-import Styles from './Styles';
+import styles from './styles';
 
 export default function Login({ route, navigation }) {
 
@@ -51,16 +51,16 @@ export default function Login({ route, navigation }) {
 
     if (visible) {
         return (
-            <View style={Styles.loginBody} >
-                <Image style={Styles.loginLogo} source={require('../assets/carly_logo.png')} />
+            <View style={styles.loginBody} >
+                <Image style={styles.loginLogo} source={require('../assets/carly_logo.png')} />
                 <TextInput
-                    style={Styles.loginTextinput}
+                    style={styles.loginTextinput}
                     placeholder='Enter your login'
                     value={name}
                     onChangeText={(value) => setName(value)}
                 />
                 <TextInput
-                    style={Styles.loginTextinput}
+                    style={styles.loginTextinput}
                     placeholder='Password'
                     value={password}
                     onChangeText={(value) => setPassword(value)}
@@ -71,8 +71,8 @@ export default function Login({ route, navigation }) {
     }
     else {
         return (
-            <View style={Styles.loginBody} >
-                <Image style={Styles.loginLogo} source={require('../assets/carly_logo.png')} />
+            <View style={styles.loginBody} >
+                <Image style={styles.loginLogo} source={require('../assets/carly_logo.png')} />
             </View>
         )
     }

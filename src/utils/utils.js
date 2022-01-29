@@ -6,13 +6,13 @@ import {
     View,
 } from 'react-native'
 
-import Styles from '../Styles'
+import styles from '../styles'
 
 export const LoadingIndicator = () => {
     return (
-        <View style={Styles.loadingIndicatorContainer}>
+        <View style={styles.loadingIndicatorContainer}>
             <ActivityIndicator
-                style={Styles.loadingIndicator}
+                style={styles.loadingIndicator}
                 size='large'
                 color='#4285F4'
             />
@@ -22,8 +22,8 @@ export const LoadingIndicator = () => {
 
 export const Detail = ({ title, value }) => {
     return (
-        <Text style={Styles.detailContainer} >
-            <Text style={Styles.detailText}>{title} : </Text>
+        <Text style={styles.detailContainer} >
+            <Text style={styles.detailText}>{title} : </Text>
             <Text>{value}</Text>
         </Text>
     )
@@ -31,7 +31,7 @@ export const Detail = ({ title, value }) => {
 
 export const BackButton = ({ onPressHandler }) => {
     return (
-        <TouchableHighlight style={Styles.backButton}>
+        <TouchableHighlight style={styles.backButton}>
             <Button title={'Back'} onPress={() => onPressHandler()} />
         </TouchableHighlight>
     )

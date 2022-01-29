@@ -10,7 +10,7 @@ import {
 import moment from 'moment';
 
 import { cancelBooking } from './api/bookings';
-import Styles from "./Styles";
+import styles from "./styles";
 import { getCarById } from './api/cars';
 import { BackButton, Detail, LoadingIndicator } from './utils/utils';
 
@@ -70,14 +70,14 @@ const BookingDetails = ({ navigation, route }) => {
     }
 
     return (
-        <View style={Styles.details}>
+        <View style={styles.details}>
             {loading ?
                 <LoadingIndicator />
                 :
                 <View>
                     <BackButton onPressHandler={onPressHandler} />
 
-                    <Text style={Styles.headingText}>Booking Details:</Text>
+                    <Text style={styles.headingText}>Booking Details:</Text>
 
                     <Detail title="Booking Id" value={booking.orderId} />
                     <Detail title="Bookly Id" value={booking.booklyId} />
@@ -91,17 +91,17 @@ const BookingDetails = ({ navigation, route }) => {
                     {!displayCarData ?
                         null
                         : !car ?
-                            <Text style={Styles.noResultsFoundText}>Car data not available.</Text>
+                            <Text style={styles.noResultsFoundText}>Car data not available.</Text>
                             :
                             <View>
-                                <View style={Styles.carsDetailsComponent, { marginTop: 10 }}>
+                                <View style={styles.carsDetailsComponent, { marginTop: 10 }}>
                                     <Detail title="Booked Car Id" value={booking.carId} />
                                     <Detail title="Booked Car Name" value={car.carName} />
                                     <Detail title="Booked Car Model" value={car.carModel} />
                                     <Detail title="Booked Car Location" value={car.location} />
                                 </View>
 
-                                <Pressable onPress={goToCarDetailsHandler} style={Styles.goToCarDetailsButton} >
+                                <Pressable onPress={goToCarDetailsHandler} style={styles.goToCarDetailsButton} >
                                     <Text>Press to see details of the booked car</Text>
                                 </Pressable>
                             </View>
