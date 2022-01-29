@@ -95,7 +95,7 @@ export default function Cars({ navigation, route }) {
             <CustomSearchBar
                 placeholder='Search Cars by Name or Model'
                 value={search}
-                onChangeText={() => setSearch()}
+                onChangeText={setSearch}
             />
 
             {loading ?

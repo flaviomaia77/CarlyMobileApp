@@ -101,7 +101,7 @@ export default function Bookings({ navigation, route }) {
             <CustomSearchBar
                 placeholder='Search Bookings by Booker Name or Car Name'
                 value={search}
-                onChangeText={() => setSearch()}
+                onChangeText={setSearch}
             />
 
             {loading ?
