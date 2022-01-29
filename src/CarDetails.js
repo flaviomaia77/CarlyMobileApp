@@ -9,7 +9,7 @@ import {
 import { getCarById, getImage } from './api/cars';
 import BookingComponent from './BookingComponent';
 import { LoadingIndicator, BackButton, Detail } from './utils/utils';
-import Styles from "./Styles";
+import styles from "./styles";
 
 const CarDetails = ({ navigation, route }) => {
 
@@ -91,7 +91,7 @@ const CarDetails = ({ navigation, route }) => {
                 (image, index) =>
                     <Image
                         key={index}
-                        style={Styles.carsDetailsImage}
+                        style={styles.carsDetailsImage}
                         source={{ uri: 'data:image/png;base64,' + image }}
                     />
             ))
@@ -106,15 +106,15 @@ const CarDetails = ({ navigation, route }) => {
     }
 
     return (
-        <View style={Styles.body}>
+        <View style={styles.body}>
             {loading ?
-                <View style={Styles.loadingIndicatorContainer}>
+                <View style={styles.loadingIndicatorContainer}>
                     <LoadingIndicator />
                 </View>
                 :
                 <View>
                     <BackButton onPressHandler={onPressHandler} />
-                    <View style={Styles.carsImagesContainer}>
+                    <View style={styles.carsImagesContainer}>
                         {loadingImages ?
                             <LoadingIndicator />
                             :
@@ -127,7 +127,7 @@ const CarDetails = ({ navigation, route }) => {
                         }
                     </View>
 
-                    <View style={Styles.details}>
+                    <View style={styles.details}>
                         <Detail title="Active" value={car.active ? 'Yes' : 'No'} />
                         <Detail title="CarId" value={car.carId} />
                         <Detail title="Name" value={car.carName} />
@@ -138,7 +138,7 @@ const CarDetails = ({ navigation, route }) => {
                     </View>
 
                     <View>
-                        <Text style={Styles.carsBookingHeader}>
+                        <Text style={styles.carsBookingHeader}>
                             Total Bookings: {bookings.length}
                         </Text>
 
@@ -147,7 +147,7 @@ const CarDetails = ({ navigation, route }) => {
                                 (Choose booking to see details or cancel)
                             </Text>
                             :
-                            <Text style={Styles.detailContainer} >
+                            <Text style={styles.detailContainer} >
                                 No bookings present.
                             </Text>}
                     </View>
@@ -163,7 +163,7 @@ const CarDetails = ({ navigation, route }) => {
                         loadingOrders ?
                             <LoadingIndicator />
                             :
-                            <View style={Styles.carsBookingContainer}>
+                            <View style={styles.carsBookingContainer}>
                                 <ScrollView showsVerticalScrollIndicator={true}>
                                     {bookings.map((booking) => renderedBooking(booking))}
                                 </ScrollView>

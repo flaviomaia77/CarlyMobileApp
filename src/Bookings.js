@@ -1,18 +1,19 @@
 
 import React, { useState, useEffect } from 'react'
 import {
-    Text,
-    View,
-    TextInput,
     FlatList,
-    ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native'
 import BookingComponent from './BookingComponent'
-import styles from "./Styles"
+import styles from "./styles"
 import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
-import { LoadingIndicator } from './utils/utils'
+import { LoadingIndicator, SearchBar } from './utils/utils'
 
 export default function Bookings({ navigation, route }) {
 
@@ -113,10 +114,6 @@ export default function Bookings({ navigation, route }) {
         )
     }
 
-    const searchBookings = async (text) => {
-        setSearch(text)
-    }
-
     const renderItem = ({ item }) => {
         return (
             <BookingComponent
@@ -129,12 +126,23 @@ export default function Bookings({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
-            <TextInput
-                placeholder='Search Bookings'
-                style={styles.searchBox}
-                value={search}
-                onChangeText={(text) => searchBookings(text)}
-            />
+            <View style={styles.searchBar}>
+                <TextInput
+                    style={styles.searchBox}
+                    placeholder='Search Bookings'
+                    value={search}
+                    onChangeText={(text) => setSearch(text)}
+                />
+                <TouchableOpacity
+                    style={styles.closeButtonParent}
+                    onPress={() => setSearch('')}
+                >
+                    <Image
+                        style={styles.closeButton}
+                        source={require("../assets/close.png")}
+                    />
+                </TouchableOpacity>
+            </View>
 
             {loading ?
 

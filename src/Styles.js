@@ -11,6 +11,15 @@ export default StyleSheet.create({
         borderRadius: 10,
         marginBottom: 5,
     },
+    closeButton: {
+        height: 20,
+        width: 20,
+    },
+    closeButtonParent: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 5,
+    },
     detailContainer: {
         display: 'flex',
         fontSize: 15,
@@ -58,13 +67,17 @@ export default StyleSheet.create({
     noResultsFoundText: {
         margin: 5,
     },
-    searchBox: {
+    searchBar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
         borderRadius: 15,
         backgroundColor: '#BFE0EA',
-        width: '95%',
-        textAlign: 'center',
         alignSelf: 'center',
         marginTop: 5,
+    },
+    searchBox: {
+        textAlign: 'center',
+        width: '90%',
     },
 
     bookingsComponent: {

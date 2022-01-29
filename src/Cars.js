@@ -1,15 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-    Text,
-    View,
-    TextInput,
     FlatList,
-    ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
-import Styles from "./Styles";
+import styles from "./styles";
 import CarComponent from './CarComponent';
 import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
@@ -107,10 +108,6 @@ export default function Cars({ navigation, route }) {
         )
     }
 
-    const searchCars = async (text) => {
-        setSearch(text)
-    }
-
     const renderItem = ({ item }) => {
         return (
             <CarComponent
@@ -120,15 +117,26 @@ export default function Cars({ navigation, route }) {
     }
 
     return (
-        <View style={Styles.body}>
-            <Text style={Styles.loginName}> Logged in as {name} ! </Text>
+        <View style={styles.body}>
+            <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
-            <TextInput
-                placeholder='Search Cars'
-                style={Styles.searchBox}
-                value={search}
-                onChangeText={(text) => searchCars(text)}
-            />
+            <View style={styles.searchBar}>
+                <TextInput
+                    style={styles.searchBox}
+                    placeholder='Search Cars'
+                    value={search}
+                    onChangeText={(text) => setSearch(text)}
+                />
+                <TouchableOpacity
+                    style={styles.closeButtonParent}
+                    onPress={() => setSearch('')}
+                >
+                    <Image
+                        style={styles.closeButton}
+                        source={require("../assets/close.png")}
+                    />
+                </TouchableOpacity>
+            </View>
 
             {loading ?
 
@@ -136,9 +144,9 @@ export default function Cars({ navigation, route }) {
                 :
                 cars.length == 0 ?
 
-                    <Text style={Styles.noResultsFoundText}>There are no cars matching the search criteria.</Text>
+                    <Text style={styles.noResultsFoundText}>There are no cars matching the search criteria.</Text>
                     :
-                    <FlatList style={Styles.carsFlatlist}
+                    <FlatList style={styles.carsFlatlist}
                         keyExtractor={(item) => item.carId}
                         data={cars}
                         renderItem={renderItem}
