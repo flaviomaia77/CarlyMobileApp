@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {
     FlatList,
     RefreshControl,
-    Image,
     Text,
-    TextInput,
-    TouchableOpacity,
     View,
 } from 'react-native';
 
@@ -14,7 +11,7 @@ import styles from "./styles";
 import CarComponent from './CarComponent';
 import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
-import { LoadingIndicator, CustomSearchBar, ListFooter } from './utils/utils'
+import { LoadingIndicator, CustomSearchBar, ListFooter, FetchNextPage } from './utils/utils'
 
 
 export default function Cars({ navigation, route }) {
@@ -69,32 +66,18 @@ export default function Cars({ navigation, route }) {
         setLoading(false);
     }
 
-    const fetchNextPage = async () => {
-        if (!endOfRecords) {
-            console.log('trying to fetch next page', page + 1)
-            setLoadingNextPage(true)
-
-            // just to show that loading indicator works:
-            setTimeout(() => { }, 1000)
-
-            try {
-                const response = await getCars(search, page + 1)
-                //console.log(response.data)
-                if (response.data.length == 0) {
-                    setEndOfRecords(true)
-                    console.log('end of records reached')
-                }
-                else {
-                    setPage(page + 1)
-                    setCars([...cars, ...response.data])
-                    console.log('fetched new records')
-                }
-            } catch (err) {
-                console.log('fetchCars error')
-            }
-
-            setLoadingNextPage(false)
-        }
+    const onEndReached = async () => {
+        FetchNextPage(
+            cars,
+            getCars,
+            setCars,
+            page,
+            setPage,
+            setLoadingNextPage,
+            search,
+            endOfRecords,
+            setEndOfRecords
+        )
     }
 
     const renderItem = ({ item }) => {
@@ -127,7 +110,7 @@ export default function Cars({ navigation, route }) {
                         keyExtractor={(item) => item.carId}
                         data={cars}
                         renderItem={renderItem}
-                        onEndReached={fetchNextPage}
+                        onEndReached={onEndReached}
                         onEndReachedThreshold={0.99}
                         ListFooterComponent={<ListFooter list={cars} loadingNextPage={loadingNextPage} />}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}

@@ -16,10 +16,10 @@ const BookingComponent = (props) => {
             <Pressable onPress={onPressHandler} style={booking.status == 1 ? styles.bookingsComponent : styles.bookingsCancelledComponent} >
                 <Detail title="Booking Status" value={booking.status == 1 ? 'Active' : booking.status == 2 ? 'Cancelled by Admin' : 'Cancelled by Bookly'} />
                 <Detail title="Booking Id" value={booking.orderId} />
-                <Detail title="Booked Car Name" value={booking.carName} />
+                {booking.carName && <Detail title="Booked Car Name" value={booking.carName} />}
                 <Detail title="Booked To" value={booking.firstName + ' ' + booking.lastName} />
                 <Detail title="Booking Start" value={moment(booking.startDate).format('DD-MM-YYYY, h:mm:ss a')} />
-                {/* <Detail title="Booking End" value={moment(booking.endDate).format('DD-MM-YYYY, h:mm:ss a')} /> */}
+                {!booking.carName && <Detail title="Booking End" value={moment(booking.endDate).format('DD-MM-YYYY, h:mm:ss a')} />}
             </Pressable>
         </View>
     )

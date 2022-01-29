@@ -72,3 +72,41 @@ export const BackButton = ({ onPressHandler }) => {
         </TouchableHighlight>
     )
 }
+
+export const FetchNextPage = async (
+    list,
+    getList,
+    setList,
+    page,
+    setPage,
+    setLoadingNextPage,
+    search,
+    endOfRecords,
+    setEndOfRecords
+) => {
+    if (!endOfRecords) {
+        console.log('trying to fetch next page', page + 1)
+        setLoadingNextPage(true)
+
+        // 1 second delay just to show that loading indicator works:
+        setTimeout(() => { }, 1000)
+
+        try {
+            const response = await getList(search, page + 1)
+            //console.log(response.data)
+            if (response.data.length == 0) {
+                setEndOfRecords(true)
+                console.log('end of records reached')
+            }
+            else {
+                setPage(page + 1)
+                setList([...list, ...response.data])
+                console.log('fetched new records')
+            }
+        } catch (err) {
+            console.log('fetchCars error')
+        }
+
+        setLoadingNextPage(false)
+    }
+}

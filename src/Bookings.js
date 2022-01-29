@@ -4,17 +4,14 @@ import {
     DeviceEventEmitter,
     FlatList,
     RefreshControl,
-    Image,
     Text,
-    TextInput,
-    TouchableOpacity,
     View,
 } from 'react-native'
 import BookingComponent from './BookingComponent'
 import styles from "./styles"
 import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
-import { LoadingIndicator, CustomSearchBar, ListFooter } from './utils/utils'
+import { LoadingIndicator, CustomSearchBar, ListFooter, FetchNextPage } from './utils/utils'
 
 
 export default function Bookings({ navigation, route }) {
@@ -75,32 +72,18 @@ export default function Bookings({ navigation, route }) {
         if (bookingCancelled) fetchBookings()
     }
 
-    const fetchNextPage = async () => {
-        if (!endOfRecords) {
-            console.log('trying to fetch next page', page + 1)
-            setLoadingNextPage(true)
-
-            // just to show that loading indicator works:
-            setTimeout(() => { }, 1000)
-
-            try {
-                const response = await getBookings(search, page + 1)
-                //console.log(response.data)
-                if (response.data.length == 0) {
-                    setEndOfRecords(true)
-                    console.log('end of records reached')
-                }
-                else {
-                    setPage(page + 1)
-                    setBookings([...bookings, ...response.data])
-                    console.log('fetched new records')
-                }
-            } catch (err) {
-                console.log('fetchCars error')
-            }
-
-            setLoadingNextPage(false)
-        }
+    const onEndReached = async () => {
+        FetchNextPage(
+            bookings,
+            getBookings,
+            setBookings,
+            page,
+            setPage,
+            setLoadingNextPage,
+            search,
+            endOfRecords,
+            setEndOfRecords
+        )
     }
 
     const renderItem = ({ item }) => {
@@ -133,7 +116,7 @@ export default function Bookings({ navigation, route }) {
                         keyExtractor={(item) => item.orderId}
                         data={bookings}
                         renderItem={renderItem}
-                        onEndReached={fetchNextPage}
+                        onEndReached={onEndReached}
                         onEndReachedThreshold={0.99}
                         ListFooterComponent={<ListFooter list={bookings} loadingNextPage={loadingNextPage} />}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
