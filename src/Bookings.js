@@ -12,12 +12,16 @@ import BookingComponent from './BookingComponent'
 import styles from "./Styles"
 import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
+import { LoadingIndicator } from './utils/utils'
 
 export default function Bookings({ navigation, route }) {
 
     const [loading, setLoading] = useState(true)
+    const [loadingNextPage, setLoadingNextPage] = useState(false);
     const [name, setName] = useState('')
     const [bookings, setBookings] = useState([])
+    const [page, setPage] = useState(0);
+    const [endOfRecords, setEndOfRecords] = useState(false)
     const [search, setSearch] = useState('')
     const [debouncedSearch, setDebouncedSearch] = useState('')
 
@@ -49,6 +53,8 @@ export default function Bookings({ navigation, route }) {
     }, [debouncedSearch])
 
     const fetchBookings = async () => {
+        setEndOfRecords(false)
+        setPage(0)
         setLoading(true)
 
         try {
@@ -67,6 +73,45 @@ export default function Bookings({ navigation, route }) {
     // const reloadOnBookingCancel = (bookingCancelled) => {
     //     if (bookingCancelled) fetchBookings()
     // }
+
+    const fetchNextPage = async () => {
+        if (!endOfRecords) {
+            console.log('trying to fetch next page', page + 1)
+            setLoadingNextPage(true)
+            const timerId = setTimeout(() => {
+
+            }, 1000)
+
+            try {
+                const response = await getBookings(search, page + 1)
+                //console.log(response.data)
+                if (response.data.length == 0) {
+                    setEndOfRecords(true)
+                    console.log('end of records reached')
+                }
+                else {
+                    setPage(page + 1)
+                    setBookings([...bookings, ...response.data])
+                    console.log('fetched new records')
+                }
+            } catch (err) {
+                console.log('fetchCars error')
+            }
+
+            setLoadingNextPage(false)
+        }
+    }
+
+    const ListFooter = () => {
+        if (!loadingNextPage) {
+            return <Text>Total records found: {bookings.length}</Text>
+        }
+        return (
+            <View style={{ height: 15 }}>
+                <LoadingIndicator />
+            </View>
+        )
+    }
 
     const searchBookings = async (text) => {
         setSearch(text)
@@ -93,13 +138,7 @@ export default function Bookings({ navigation, route }) {
 
             {loading ?
 
-                <View style={styles.loadingIndicatorContainer}>
-                    <ActivityIndicator
-                        style={styles.loadingIndicator}
-                        size='large'
-                        color='#4285F4'
-                    />
-                </View>
+                <LoadingIndicator />
                 :
                 bookings.length == 0 ?
 
@@ -109,6 +148,9 @@ export default function Bookings({ navigation, route }) {
                         keyExtractor={(item) => item.orderId}
                         data={bookings}
                         renderItem={renderItem}
+                        onEndReached={fetchNextPage}
+                        onEndReachedThreshold={0.99}
+                        ListFooterComponent={ListFooter}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
                     />
             }
