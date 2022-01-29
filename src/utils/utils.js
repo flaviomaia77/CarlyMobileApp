@@ -3,17 +3,20 @@ import {
     Button,
     Text,
     TouchableHighlight,
+    View,
 } from 'react-native'
 
 import Styles from '../Styles'
 
 export const LoadingIndicator = () => {
     return (
-        <ActivityIndicator
-            style={Styles.loadingIndicator}
-            size='large'
-            color='#4285F4'
-        />
+        <View style={Styles.loadingIndicatorContainer}>
+            <ActivityIndicator
+                style={Styles.loadingIndicator}
+                size='large'
+                color='#4285F4'
+            />
+        </View>
     )
 }
 
