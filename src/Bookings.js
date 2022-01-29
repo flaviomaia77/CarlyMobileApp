@@ -103,7 +103,7 @@ export default function Bookings({ navigation, route }) {
                 :
                 bookings.length == 0 ?
 
-                    <Text style={styles.noResultsFoundText}>There are no bookings matching the search criteria.</Text>
+                    <Text style={styles.noResultsFoundText}>There are no bookings {{ search } == '' ? '.' : 'matching the search criteria.'}</Text>
                     :
                     <FlatList style={styles.bookingsFlatlist}
                         keyExtractor={(item) => item.orderId}
