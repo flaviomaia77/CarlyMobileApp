@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-    Text,
+    DeviceEventEmitter,
     Image,
     ScrollView,
-    DeviceEventEmitter
+    Text,
 } from 'react-native';
 import { getCarById, getImage } from './api/cars';
 import BookingComponent from './BookingComponent';
@@ -160,14 +160,15 @@ const CarDetails = ({ navigation, route }) => {
                     {bookings.length == 0 ?
                         null
                         :
-                        loadingOrders ?
-                            <LoadingIndicator />
-                            :
-                            <View style={styles.carsBookingContainer}>
+                        <View style={styles.carsBookingContainer}>
+                            {loadingOrders ?
+                                <LoadingIndicator />
+                                :
                                 <ScrollView showsVerticalScrollIndicator={true}>
                                     {bookings.map((booking) => renderedBooking(booking))}
                                 </ScrollView>
-                            </View>
+                            }
+                        </View>
                     }
                 </View>
             }

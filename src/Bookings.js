@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react'
 import {
+    DeviceEventEmitter,
     FlatList,
     RefreshControl,
     Image,
@@ -13,7 +14,8 @@ import BookingComponent from './BookingComponent'
 import styles from "./styles"
 import { getName } from './utils/jwt'
 import { getBookings } from './api/bookings'
-import { LoadingIndicator, SearchBar } from './utils/utils'
+import { LoadingIndicator, CustomSearchBar, ListFooter } from './utils/utils'
+
 
 export default function Bookings({ navigation, route }) {
 
@@ -26,7 +28,7 @@ export default function Bookings({ navigation, route }) {
     const [search, setSearch] = useState('')
     const [debouncedSearch, setDebouncedSearch] = useState('')
 
-    //DeviceEventEmitter.addListener("event.bookingCancellation", (bookingCancelled) => reloadOnBookingCancel(bookingCancelled));
+    DeviceEventEmitter.addListener("event.bookingCancellation", (bookingCancelled) => reloadOnBookingCancel(bookingCancelled));
 
     useEffect(() => {
         const displayLoginName = async () => {
@@ -69,19 +71,17 @@ export default function Bookings({ navigation, route }) {
         setLoading(false)
     }
 
-    // TODO : Test reFetching of bookings after an booking cancellation
-
-    // const reloadOnBookingCancel = (bookingCancelled) => {
-    //     if (bookingCancelled) fetchBookings()
-    // }
+    const reloadOnBookingCancel = (bookingCancelled) => {
+        if (bookingCancelled) fetchBookings()
+    }
 
     const fetchNextPage = async () => {
         if (!endOfRecords) {
             console.log('trying to fetch next page', page + 1)
             setLoadingNextPage(true)
-            const timerId = setTimeout(() => {
 
-            }, 1000)
+            // just to show that loading indicator works:
+            setTimeout(() => { }, 1000)
 
             try {
                 const response = await getBookings(search, page + 1)
@@ -103,21 +103,10 @@ export default function Bookings({ navigation, route }) {
         }
     }
 
-    const ListFooter = () => {
-        if (!loadingNextPage) {
-            return <Text>Total records found: {bookings.length}</Text>
-        }
-        return (
-            <View style={{ height: 15 }}>
-                <LoadingIndicator />
-            </View>
-        )
-    }
-
     const renderItem = ({ item }) => {
         return (
             <BookingComponent
-                booking={item} navigation={navigation}
+                booking={item} displayCarData={true} navigation={navigation}
             />
         )
     }
@@ -126,23 +115,11 @@ export default function Bookings({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
-            <View style={styles.searchBar}>
-                <TextInput
-                    style={styles.searchBox}
-                    placeholder='Search Bookings'
-                    value={search}
-                    onChangeText={(text) => setSearch(text)}
-                />
-                <TouchableOpacity
-                    style={styles.closeButtonParent}
-                    onPress={() => setSearch('')}
-                >
-                    <Image
-                        style={styles.closeButton}
-                        source={require("../assets/close.png")}
-                    />
-                </TouchableOpacity>
-            </View>
+            <CustomSearchBar
+                placeholder='Search Bookings by Booker Name or Car Name'
+                value={search}
+                onChangeText={() => setSearch()}
+            />
 
             {loading ?
 
@@ -158,7 +135,7 @@ export default function Bookings({ navigation, route }) {
                         renderItem={renderItem}
                         onEndReached={fetchNextPage}
                         onEndReachedThreshold={0.99}
-                        ListFooterComponent={ListFooter}
+                        ListFooterComponent={<ListFooter list={bookings} loadingNextPage={loadingNextPage} />}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
                     />
             }

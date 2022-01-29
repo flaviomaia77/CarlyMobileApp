@@ -127,8 +127,8 @@ export default StyleSheet.create({
         marginLeft: 5,
     },
     goToCarDetailsButton: {
-        marginTop: 20,
-        marginLeft: 5,
+        marginVertical: 20,
+        marginHorizontal: 5,
         borderColor: '#000',
         borderWidth: 2,
         borderRadius: 5,

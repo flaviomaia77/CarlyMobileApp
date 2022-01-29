@@ -40,7 +40,7 @@ export const cancelBooking = async (booking) => {
 
     try {
         return await axios.patch(
-            `${API_NAME}/${API_ENDPOINTS.cars}/${booking.car}/${API_ENDPOINTS.booking}`,
+            `${API_NAME}/${API_ENDPOINTS.cars}/${booking.carId}/${API_ENDPOINTS.booking}`,
             JSON.stringify(body),
             {
                 headers: {

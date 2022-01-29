@@ -59,8 +59,17 @@ const BookingDetails = ({ navigation, route }) => {
     const functionCancelBooking = async () => {
         try {
             const response = await cancelBooking(booking)
-            // TODO: check if response is OK and display notification to user
-            // whether cancellation was succesful or not
+
+            if (response.status == 200) {
+                Alert.alert('Booking cancellation', `The booking was cancelled succesfully! `, [
+                    { text: 'Continue', onPress: () => null },
+                ], { cancelable: true, onDismiss: () => null })
+            }
+            else {
+                Alert.alert(`Booking cancellation', 'The booking was NOT cancelled! (${response.status} error)`, [
+                    { text: 'Continue', onPress: () => null },
+                ], { cancelable: true, onDismiss: () => null })
+            }
         } catch (err) {
             console.log('functionCancelBooking error')
         }

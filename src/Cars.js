@@ -14,7 +14,7 @@ import styles from "./styles";
 import CarComponent from './CarComponent';
 import { getName } from './utils/jwt';
 import { getCars } from './api/cars'
-import { LoadingIndicator } from './utils/utils';
+import { LoadingIndicator, CustomSearchBar, ListFooter } from './utils/utils'
 
 
 export default function Cars({ navigation, route }) {
@@ -73,9 +73,9 @@ export default function Cars({ navigation, route }) {
         if (!endOfRecords) {
             console.log('trying to fetch next page', page + 1)
             setLoadingNextPage(true)
-            const timerId = setTimeout(() => {
 
-            }, 1000)
+            // just to show that loading indicator works:
+            setTimeout(() => { }, 1000)
 
             try {
                 const response = await getCars(search, page + 1)
@@ -97,17 +97,6 @@ export default function Cars({ navigation, route }) {
         }
     }
 
-    const ListFooter = () => {
-        if (!loadingNextPage) {
-            return <Text>Total records found: {cars.length}</Text>
-        }
-        return (
-            <View style={{ height: 15 }}>
-                <LoadingIndicator />
-            </View>
-        )
-    }
-
     const renderItem = ({ item }) => {
         return (
             <CarComponent
@@ -120,23 +109,11 @@ export default function Cars({ navigation, route }) {
         <View style={styles.body}>
             <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
-            <View style={styles.searchBar}>
-                <TextInput
-                    style={styles.searchBox}
-                    placeholder='Search Cars'
-                    value={search}
-                    onChangeText={(text) => setSearch(text)}
-                />
-                <TouchableOpacity
-                    style={styles.closeButtonParent}
-                    onPress={() => setSearch('')}
-                >
-                    <Image
-                        style={styles.closeButton}
-                        source={require("../assets/close.png")}
-                    />
-                </TouchableOpacity>
-            </View>
+            <CustomSearchBar
+                placeholder='Search Cars by Name or Model'
+                value={search}
+                onChangeText={() => setSearch()}
+            />
 
             {loading ?
 
@@ -152,7 +129,7 @@ export default function Cars({ navigation, route }) {
                         renderItem={renderItem}
                         onEndReached={fetchNextPage}
                         onEndReachedThreshold={0.99}
-                        ListFooterComponent={ListFooter}
+                        ListFooterComponent={<ListFooter list={cars} loadingNextPage={loadingNextPage} />}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchCars} />}
                     />
             }

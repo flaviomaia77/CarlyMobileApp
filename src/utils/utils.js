@@ -1,8 +1,11 @@
 import {
     ActivityIndicator,
     Button,
+    Image,
     Text,
+    TextInput,
     TouchableHighlight,
+    TouchableOpacity,
     View,
 } from 'react-native'
 
@@ -16,6 +19,39 @@ export const LoadingIndicator = () => {
                 size='large'
                 color='#4285F4'
             />
+        </View>
+    )
+}
+
+export const ListFooter = ({ list, loadingNextPage }) => {
+    if (!loadingNextPage) {
+        return <Text>Total records found: {list.length}</Text>
+    }
+    return (
+        <View style={{ height: 15 }}>
+            <LoadingIndicator />
+        </View>
+    )
+}
+
+export const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
+    return (
+        <View style={styles.searchBar}>
+            <TextInput
+                style={styles.searchBox}
+                placeholder={placeholder}
+                value={value}
+                onChangeText={(text) => onChangeText(text)}
+            />
+            <TouchableOpacity
+                style={styles.closeButtonParent}
+                onPress={() => onChangeText('')}
+            >
+                <Image
+                    style={styles.closeButton}
+                    source={require("../../assets/close.png")}
+                />
+            </TouchableOpacity>
         </View>
     )
 }
