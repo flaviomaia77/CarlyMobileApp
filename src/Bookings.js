@@ -106,7 +106,7 @@ export default function Bookings({ navigation, route }) {
                     <Text style={styles.noResultsFoundText}>There are no bookings matching the search criteria.</Text>
                     :
                     <FlatList style={styles.bookingsFlatlist}
-                        keyExtractor={(item) => item.bookingId}
+                        keyExtractor={(item) => item.orderId}
                         data={bookings}
                         renderItem={renderItem}
                         refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchBookings} />}
