@@ -93,7 +93,7 @@ export default function Cars({ navigation, route }) {
             <Text style={styles.loginName}> Logged in as {name} ! </Text>
 
             <CustomSearchBar
-                placeholder='Search Cars by Name or Model'
+                placeholder='Search Cars by Name, Model or Location'
                 value={search}
                 onChangeText={setSearch}
             />
