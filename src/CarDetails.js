@@ -31,7 +31,7 @@ const CarDetails = ({ navigation, route }) => {
         setBookings(car.orders)
 
         try {
-            functionGetImages(car.images)
+            if (car.images) { functionGetImages(car.images) }
         } catch (err) {
             console.log(err)
         }
@@ -55,7 +55,7 @@ const CarDetails = ({ navigation, route }) => {
             setCar(response.data)
         } catch (err) {
             console.log('fetchCar error')
-            setCar(null)
+            setCar('')
         }
 
         setLoading(false);
