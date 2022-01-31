@@ -8,8 +8,8 @@ import styles from './styles';
 
 export default function Login({ route, navigation }) {
 
-    const [name, setName] = useState('Muratcan')
-    const [password, setPassword] = useState('muratcan')
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
     const [visible, setVisible] = useState('')
 
     useFocusEffect(() => {
